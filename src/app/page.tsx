@@ -1,4 +1,8 @@
+"use client";
+
 import MobileContainer from "@/components/container/mobile";
+import { Button } from "@/components/ui/button";
+import React from "react";
 
 export default function Home() {
   return (
@@ -10,6 +14,7 @@ export default function Home() {
         nostrum eos commodi soluta sint quidem. Quam ad adipisci vitae ex illo
         corporis amet!
       </p>
+      <Button>Click</Button>
     </MobileContainer>
   );
 }
