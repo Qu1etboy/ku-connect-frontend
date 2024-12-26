@@ -5,5 +5,5 @@ type MobileContainerProps = {
 };
 
 export default function MobileContainer({ children }: MobileContainerProps) {
-  return <div className="max-w-md mx-auto">{children}</div>;
+  return <div className="relative max-w-md mx-auto min-h-dvh">{children}</div>;
 }

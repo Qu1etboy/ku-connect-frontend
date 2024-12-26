@@ -1,5 +1,6 @@
 "use client";
 
+import Menu from "@/components/menu";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/user";
 
@@ -26,6 +27,8 @@ export default function Home() {
       ) : (
         <Button onClick={() => login()}>Login with Google</Button>
       )}
+
+      <Menu />
     </main>
   );
 }
