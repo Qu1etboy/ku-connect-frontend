@@ -2,9 +2,11 @@
 
 import MobileContainer from "@/components/container/mobile";
 import { Button } from "@/components/ui/button";
-import React from "react";
+import { useUser } from "@/hooks/user";
 
 export default function Home() {
+  const { user, login, logout, isLoading } = useUser();
+
   return (
     <MobileContainer>
       <h1>Hello Mhoo Toey</h1>
@@ -14,7 +16,17 @@ export default function Home() {
         nostrum eos commodi soluta sint quidem. Quam ad adipisci vitae ex illo
         corporis amet!
       </p>
-      <Button>Click</Button>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : user ? (
+        <div>
+          <div>{user.name}</div>
+          <div>{user.email}</div>
+          <Button onClick={logout}>Logout</Button>
+        </div>
+      ) : (
+        <Button onClick={login}>Login with Google</Button>
+      )}
     </MobileContainer>
   );
 }
