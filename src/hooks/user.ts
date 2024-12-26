@@ -10,6 +10,12 @@ export function useUser() {
   const login = () => {
     supabase.auth.signInWithOAuth({
       provider: "google",
+      options: {
+        queryParams: {
+          hd: "ku.th",
+          prompt: "select_account",
+        },
+      },
     });
   };
 
