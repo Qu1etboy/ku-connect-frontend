@@ -26,14 +26,14 @@ type ComboboxProps = {
   }[];
   placeholder?: string;
   value: string;
-  setValue: (value: string) => void;
+  onChange: (value: string) => void;
 };
 
 export function Combobox({
   data,
   placeholder,
   value,
-  setValue,
+  onChange,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -61,7 +61,7 @@ export function Combobox({
                   key={d.value}
                   value={d.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    onChange(currentValue);
                     setOpen(false);
                   }}
                 >
