@@ -1,6 +1,5 @@
 "use client";
 
-import MobileContainer from "@/components/container/mobile";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/user";
 
@@ -8,7 +7,7 @@ export default function Home() {
   const { user, login, logout, isLoading } = useUser();
 
   return (
-    <MobileContainer>
+    <main>
       <h1>Hello Mhoo Toey</h1>
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque,
@@ -25,8 +24,8 @@ export default function Home() {
           <Button onClick={logout}>Logout</Button>
         </div>
       ) : (
-        <Button onClick={login}>Login with Google</Button>
+        <Button onClick={() => login()}>Login with Google</Button>
       )}
-    </MobileContainer>
+    </main>
   );
 }

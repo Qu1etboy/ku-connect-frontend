@@ -2,12 +2,16 @@ import { createClient } from "@/lib/supabase/client";
 import { UserMetadata } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
+type LoginOption = {
+  redirectTo?: string;
+};
+
 export function useUser() {
   const supabase = createClient();
   const [user, setUser] = useState<UserMetadata | null>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const login = () => {
+  const login = (options?: LoginOption) => {
     supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -15,6 +19,7 @@ export function useUser() {
           hd: "ku.th",
           prompt: "select_account",
         },
+        redirectTo: options?.redirectTo,
       },
     });
   };
