@@ -1,5 +1,6 @@
 "use client";
 
+import MainLayout from "@/components/layout/main";
 import Menu from "@/components/menu";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/user";
@@ -8,7 +9,7 @@ import React from "react";
 export default function ProfilePage() {
   const { user, login, logout, isLoading } = useUser();
   return (
-    <div>
+    <MainLayout title="Profile">
       {isLoading ? (
         <div>Loading...</div>
       ) : user ? (
@@ -31,6 +32,6 @@ export default function ProfilePage() {
         </Button>
       )}
       <Menu />
-    </div>
+    </MainLayout>
   );
 }
