@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
+import { Switch } from "../ui/switch";
 
 type InputFieldProps = {
   control: any;
@@ -171,6 +172,26 @@ export default function InputField({
         );
     }
   };
+
+  if (type === "switch") {
+    return (
+      <FormField
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center justify-between rounded-lg p-3">
+            <div className="space-y-0.5">
+              <FormLabel>{label}</FormLabel>
+              <FormDescription>{description}</FormDescription>
+            </div>
+            <FormControl>
+              <Switch checked={field.value} onCheckedChange={field.onChange} />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+    );
+  }
 
   return (
     <FormField
