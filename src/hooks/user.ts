@@ -4,7 +4,7 @@ import { UserMetadata } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
 type LoginOption = {
-  redirectTo?: string;
+  redirectTo: string;
 };
 
 export function useUser() {
@@ -12,7 +12,7 @@ export function useUser() {
   const [user, setUser] = useState<UserMetadata | null>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const login = (options?: LoginOption) => {
+  const login = (options: LoginOption = { redirectTo: "/" }) => {
     supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -25,7 +25,7 @@ export function useUser() {
           // hd: "ku.th",
           prompt: "select_account",
         },
-        redirectTo: getUrl("/api/auth/callback?next=" + options?.redirectTo),
+        redirectTo: getUrl("/api/auth/callback?next=" + options.redirectTo),
       },
     });
   };
