@@ -2,7 +2,7 @@
 
 import { useUser } from "@/hooks/user";
 import { getUrl } from "@/utils/url";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import React from "react";
 
 type AuthProtectedProps = {
@@ -10,18 +10,14 @@ type AuthProtectedProps = {
 };
 
 export default function AuthProtected({ children }: AuthProtectedProps) {
-  const { user, isLoading, login } = useUser();
-  const pathname = usePathname();
+  const { user, isLoading } = useUser();
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (!user) {
-    login({
-      redirectTo: getUrl(pathname),
-    });
-    return null;
+    redirect("/login");
   }
 
   return <div>{children}</div>;

@@ -30,8 +30,12 @@ export function useUser() {
     });
   };
 
-  const logout = () => {
-    supabase.auth.signOut();
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error(error);
+      throw error;
+    }
     setUser(null);
   };
 
