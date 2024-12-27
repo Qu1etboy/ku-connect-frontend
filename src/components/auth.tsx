@@ -1,8 +1,7 @@
 "use client";
 
 import { useUser } from "@/hooks/user";
-import { getUrl } from "@/utils/url";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 import React from "react";
 
 type AuthProtectedProps = {
