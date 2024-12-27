@@ -15,6 +15,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
+          console.log(cookiesToSet);
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
