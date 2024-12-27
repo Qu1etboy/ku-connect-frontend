@@ -33,7 +33,7 @@ export default function Menu() {
   const pathname = usePathname();
 
   return (
-    <nav className="absolute bottom-0 w-full border-t">
+    <nav className="absolute z-10 bottom-0 w-full border-t bg-white">
       <ul className="flex justify-between items-center space-x-4">
         {menu.map((item) => (
           <MenuItem key={item.url} active={item.url === pathname}>
