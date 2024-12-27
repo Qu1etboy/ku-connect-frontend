@@ -20,7 +20,7 @@ export default function OnBoardingPage() {
   const current = data.steps.find((s) => s.step === step)!;
 
   const validate = () => {
-    const ids = current.group?.flatMap((group) =>
+    const ids: any = current.group?.flatMap((group) =>
       group.form?.map((field) => field.id)
     );
     if (!ids) return true;

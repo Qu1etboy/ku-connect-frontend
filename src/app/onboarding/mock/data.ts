@@ -146,7 +146,7 @@ export type ProfileForm = z.infer<typeof formSchema>;
 export const defaultProfile = {
   name: "",
   bio: "",
-  birthday: "",
+  birthday: undefined,
   line: "",
   faculty: "",
   year: "",
