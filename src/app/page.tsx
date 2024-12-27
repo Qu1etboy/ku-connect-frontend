@@ -25,7 +25,7 @@ const profiles = [
 
 export default function Home() {
   return (
-    <main>
+    <main className="h-dvh flex flex-col">
       <ProfileSwiper profiles={profiles} />
       <Menu />
     </main>

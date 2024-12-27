@@ -1,5 +1,29 @@
 export const notifications = [
   {
+    id: 8,
+    title: "New Message 📩",
+    message: "Han So Hee: ☺️",
+    icon: "mail",
+    created_time: "2024-12-28 01:33",
+    read_at: null,
+  },
+  {
+    id: 9,
+    title: "New Message 📩",
+    message: "Han So Hee: ☺️",
+    icon: "mail",
+    created_time: "2024-12-28 01:33",
+    read_at: null,
+  },
+  {
+    id: 10,
+    title: "New Message 📩",
+    message: "Han So Hee: ☺️",
+    icon: "mail",
+    created_time: "2024-12-28 01:33",
+    read_at: null,
+  },
+  {
     id: 1,
     title: "New Message 📩",
     message: "Han So Hee: ☺️",

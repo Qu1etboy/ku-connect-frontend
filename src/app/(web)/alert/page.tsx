@@ -1,5 +1,4 @@
 import MainLayout from "@/components/layout/main";
-import Menu from "@/components/menu";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
@@ -36,7 +35,6 @@ export default function AlertPage() {
       ) : (
         <div className="text-center mt-24">You have no new notification.</div>
       )}
-      <Menu />
     </MainLayout>
   );
 }

@@ -10,12 +10,9 @@ type ProfileSwiperProps = {
 
 export default function ProfileSwiper({ profiles }: ProfileSwiperProps) {
   return (
-    <div className="absolute snap-y snap-mandatory h-full overflow-scroll no-scrollbar">
+    <div className="snap-y snap-mandatory flex-1 overflow-scroll no-scrollbar">
       {profiles.map((profile, index) => (
-        <div
-          key={index}
-          className="snap-center snap-always h-full w-full pb-[64px]"
-        >
+        <div key={index} className="snap-center snap-always h-full w-full">
           <div className="h-[55%]">
             <img
               src={profile.image}

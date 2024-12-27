@@ -1,7 +1,6 @@
 "use client";
 
 import MainLayout from "@/components/layout/main";
-import Menu from "@/components/menu";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/user";
 import React from "react";
@@ -31,7 +30,6 @@ export default function ProfilePage() {
           Login with Google
         </Button>
       )}
-      <Menu />
     </MainLayout>
   );
 }
