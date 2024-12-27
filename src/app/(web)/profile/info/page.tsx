@@ -54,7 +54,7 @@ const groups = [
   },
 ];
 
-const profile = {
+const profile: any = {
   displayName: "Mock",
   bio: "Hello",
   faculty: "Science",
