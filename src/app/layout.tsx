@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import MobileContainer from "@/components/container/mobile";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ weight: ["400", "700"], subsets: ["latin"] });
 
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <MobileContainer>{children}</MobileContainer>
+        <MobileContainer>
+          {children}
+          <Toaster />
+        </MobileContainer>
       </body>
     </html>
   );

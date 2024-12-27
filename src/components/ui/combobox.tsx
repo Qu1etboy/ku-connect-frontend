@@ -27,6 +27,7 @@ type ComboboxProps = {
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
+  width?: string;
 };
 
 export function Combobox({
@@ -34,6 +35,7 @@ export function Combobox({
   placeholder,
   value,
   onChange,
+  width = "200px",
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -44,13 +46,14 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="justify-between"
+          style={{ width }}
         >
           {value ? data.find((d) => d.value === value)?.label : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="p-0 w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
         <Command>
           <CommandInput placeholder={placeholder} />
           <CommandList>
