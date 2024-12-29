@@ -147,11 +147,12 @@ export default function OnBoardingPage() {
 
 				<section className="flex gap-5">
 					{!isFirstStep && (
-						<Button className="w-full bg-white text-black" onClick={prevStep}>
+						<Button className="w-full bg-white text-black focus:bg-white"
+						onClick={prevStep}>
 							Back
 						</Button>
 					)}
-					<Button className="w-full" onClick={nextStep}>
+					<Button className="w-full focus:bg-black" onClick={nextStep}>
 						{isLastStep ? "Finish" : "Continue"}
 					</Button>
 				</section>

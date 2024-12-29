@@ -49,7 +49,7 @@ export default function InputField({
 										<ToggleGroupItem
 											key={d.value}
 											value={d.value}
-											className='border border-gray-200 rounded-full px-3 py-1 m-1 hover:text-black data-[state=on]:bg-green-200 data-[state=on]:border-green-500'
+											className='bg-white border border-gray-200 rounded-full px-3 py-1 m-1 hover:text-black data-[state=on]:bg-green-300 data-[state=on]:border-green-500'
 										>
 											{d.label}
 										</ToggleGroupItem>
