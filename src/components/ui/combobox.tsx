@@ -49,7 +49,9 @@ export function Combobox({
           className="justify-between"
           style={{ width }}
         >
+          <span className="truncate">
           {value ? data.find((d) => d.value === value)?.label : placeholder}
+          </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
