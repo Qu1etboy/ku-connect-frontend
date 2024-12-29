@@ -23,6 +23,8 @@
     "@radix-ui/react-select": "^2.1.4",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-switch": "^1.1.2",
+    "@radix-ui/react-toggle": "^1.1.1",
+    "@radix-ui/react-toggle-group": "^1.1.1",
     "@storybook/manager-api": "^8.4.7",
     "@storybook/preview-api": "^8.4.7",
     "@supabase/ssr": "^0.5.2",
