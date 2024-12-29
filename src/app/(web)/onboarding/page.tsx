@@ -87,7 +87,7 @@ export default function OnBoardingPage() {
 
 	return (
 		<AuthProtected>
-			<div className="max-h-screen min-h-screen flex flex-col px-10 py-10">
+			<div className="max-h-screen min-h-screen flex flex-col px-10 py-10 bg-gradient-to-b from-white to-green-300 from-[50%]">
 				<header>
 					<div className="flex justify-between items-center">
 						<span className="text-sm font-medium h-9 flex items-center">
@@ -115,7 +115,7 @@ export default function OnBoardingPage() {
 					</div>
 					<div
 						className={`overflow-auto max-h-[45vh] ${
-							current.card ? "border border-gray-200 p-4 rounded-lg shadow-md" : ""
+							current.card ? "border border-gray-200 p-4 rounded-lg shadow-md bg-white" : ""
 						}`}
 					>
 						<Form {...form}>
@@ -147,7 +147,7 @@ export default function OnBoardingPage() {
 
 				<section className="flex gap-5">
 					{!isFirstStep && (
-						<Button className="w-full" onClick={prevStep}>
+						<Button className="w-full bg-white text-black" onClick={prevStep}>
 							Back
 						</Button>
 					)}
