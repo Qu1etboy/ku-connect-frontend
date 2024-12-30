@@ -194,7 +194,7 @@ export const data: OnboardingData = {
 			step: 2,
 			skippable: true,
 			card: true,
-			title: "Tell Us More About You",
+			title: "Tell us more about yourself",
 			description: "Add optional details to personalize your profile. You can skip this step if you'd like.",
 			group: [
 				{
@@ -204,7 +204,6 @@ export const data: OnboardingData = {
 							type: "text",
 							label: "Display Name",
 							placeholder: "Enter your name",
-							required: true,
 						},
 						{
 							id: "bio",
@@ -263,7 +262,6 @@ export const data: OnboardingData = {
 			step: 4,
 			title: "What are you interested in?",
 			description: "Choose what you're passionate about to find your perfect connections.",
-			skippable: false,
 			group: [
 				{
 					form: [
@@ -315,6 +313,13 @@ export const data: OnboardingData = {
 								{ value: "42", label: "💃 Dance" },
 								{ value: "43", label: "🌾 Gardening" },
 								{ value: "44", label: "🍹 Mixology" },
+								{ value: "45", label: "🎤 Singing" },
+								{ value: "46", label: "🎥 Filmmaking" },
+								{ value: "47", label: "🎧 Podcasting" },
+								{ value: "48", label: "🧑‍🔬 Research Opportunities" },
+								{ value: "49", label: "💼 Part-time Jobs" },
+								{ value: "50", label: "🧘‍♂️ Meditation" },
+								{ value: "51", label: "🧠 Mental Wellness" },
 							],
 						},
 					],
@@ -341,13 +346,15 @@ export const formSchema = z.object({
 export type ProfileForm = z.infer<typeof formSchema>;
 
 export const defaultProfile = {
-	name: "",
-	bio: "",
-	birthday: undefined,
-	line: "",
 	faculty: "",
 	department: "",
 	year: "",
-	mode: "",
-	agree: false,
+	name: "",
+	bio: "",
+	birthdate: undefined,
+	line: "",
+	facebook: "",
+	instagram: "",
+	other: "",
+	interests: [],
 };

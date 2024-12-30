@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Progress } from "@/components/ui/progress";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -18,6 +19,7 @@ export default function OnBoardingPage() {
 		defaultValues: defaultProfile,
 	});
 	const [step, setStep] = React.useState(1);
+	const router = useRouter();
 	const current = data.steps.find((s) => s.step === step)!;
 
 	const validate = () => {
@@ -36,6 +38,8 @@ export default function OnBoardingPage() {
 		}
 		if (isLastStep) {
 			submit();
+			// TODO: add if success and error popup
+			router.push("/onboarding/success");
 			return;
 		}
 		setStep(step + 1);
@@ -81,8 +85,8 @@ export default function OnBoardingPage() {
 		// Clear department field if faculty is changed
 		if (department && !departmentData?.some((dept) => dept.value === department)) {
 			form.setValue("department", "");
-			form.trigger("department");
 		}
+		form.trigger("department");
 	}, [formWatch.faculty, formWatch.department, form]);
 
 	return (
@@ -147,8 +151,7 @@ export default function OnBoardingPage() {
 
 				<section className="flex gap-5">
 					{!isFirstStep && (
-						<Button className="w-full bg-white text-black focus:bg-white"
-						onClick={prevStep}>
+						<Button className="w-full bg-white text-black focus:bg-white" onClick={prevStep}>
 							Back
 						</Button>
 					)}
