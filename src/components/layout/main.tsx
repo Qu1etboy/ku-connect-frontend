@@ -22,7 +22,9 @@ export default function MainLayout({
             <ChevronLeft />
           </Link>
         )}
-        <h1 className="text-xl font-bold col-start-4 col-span-6">{title}</h1>
+        <h1 className="text-lg md:text-xl font-bold col-start-4 col-span-6">
+          {title}
+        </h1>
       </header>
       <main className="flex-1">{children}</main>
       <Menu />

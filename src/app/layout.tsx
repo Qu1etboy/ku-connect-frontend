@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MobileContainer from "@/components/container/mobile";
 import { Toaster } from "@/components/ui/sonner";
+import Providers from "@/components/providers";
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -22,10 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <MobileContainer>
-          {children}
-          <Toaster />
-        </MobileContainer>
+        <Providers>
+          <MobileContainer>
+            {children}
+            <Toaster />
+          </MobileContainer>
+        </Providers>
       </body>
     </html>
   );
