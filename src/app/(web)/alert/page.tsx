@@ -25,11 +25,13 @@ type Notification = {
   updatedTime: string;
 };
 
+const PAGE_SIZE = 15;
+
 export default function AlertPage() {
   const { data, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ["notifications"],
-      queryFn: ({ pageParam }) => fetchMyNotification(pageParam, 10),
+      queryFn: ({ pageParam }) => fetchMyNotification(pageParam, PAGE_SIZE),
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages, lastPageParam) => {
         if (lastPage.length === 0) {
