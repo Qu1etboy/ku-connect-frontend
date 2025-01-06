@@ -15,7 +15,7 @@ export default function MainLayout({
   children,
 }: MainLayoutProps) {
   return (
-    <div className="flex flex-col min-h-dvh">
+    <div className="flex flex-col min-h-dvh pt-safe">
       <header className="sticky top-0 z-10 bg-white grid grid-cols-12 place-content-center text-center py-6 border-b shadow-sm">
         {backUrl && (
           <Link href={backUrl} className="pt-1 pl-4">
