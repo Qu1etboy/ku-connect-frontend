@@ -13,6 +13,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "KU Connect",
   description: "Find friends, join activities, and connect with Nisit Kaset.",
+  // Set your document to flow to the Iphone's notch area
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export default function RootLayout({
