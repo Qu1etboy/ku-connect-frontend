@@ -15,16 +15,18 @@ export default function MainLayout({
   children,
 }: MainLayoutProps) {
   return (
-    <div className="flex flex-col min-h-dvh pt-safe">
-      <header className="sticky top-0 z-10 bg-white grid grid-cols-12 place-content-center text-center py-6 border-b shadow-sm">
-        {backUrl && (
-          <Link href={backUrl} className="pt-1 pl-4">
-            <ChevronLeft />
-          </Link>
-        )}
-        <h1 className="text-lg md:text-xl font-bold col-start-4 col-span-6">
-          {title}
-        </h1>
+    <div className="flex flex-col min-h-dvh">
+      <header className="sticky top-0 z-10 bg-white pt-safe border-b shadow-sm">
+        <div className="grid grid-cols-12 place-content-center text-center pb-6 pt-0 md:py-6">
+          {backUrl && (
+            <Link href={backUrl} className="pt-1 pl-4">
+              <ChevronLeft />
+            </Link>
+          )}
+          <h1 className="text-lg md:text-xl font-bold col-start-4 col-span-6">
+            {title}
+          </h1>
+        </div>
       </header>
       <main className="flex-1">{children}</main>
       <Menu />
