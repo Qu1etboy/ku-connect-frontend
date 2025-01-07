@@ -59,12 +59,8 @@ export default function AlertPage() {
     };
   }, []);
 
-  if (isPending) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <MainLayout title="Alerts">
+    <MainLayout title="Alerts" isLoading={isPending}>
       {data && data.pages.length > 0 ? (
         <InfiniteScroll
           dataLength={data.pages.flat().length}

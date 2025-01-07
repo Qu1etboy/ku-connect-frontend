@@ -45,10 +45,8 @@ export default function ProfilePage() {
   console.log(user);
 
   return (
-    <MainLayout title="Profile">
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : user ? (
+    <MainLayout title="Profile" isLoading={isLoading}>
+      {user ? (
         <div>
           <section className="flex items-center gap-6 px-4 py-8">
             <Avatar className="w-[100px] h-[100px]">

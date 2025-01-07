@@ -76,6 +76,13 @@
     scrollbar-width: none; /* Firefox */
   }
 
+  .header-safe {
+    padding-top: calc(
+      env(safe-area-inset-top) + calc(1.5rem - env(safe-area-inset-top))
+    );
+    padding-bottom: 1.5rem;
+  }
+
   /* extra helper classes to account for mobile safe areas */
   .p-safe {
     padding: env(safe-area-inset-top) env(safe-area-inset-right)
