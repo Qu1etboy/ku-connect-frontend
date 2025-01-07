@@ -4,17 +4,9 @@ import { Button } from "@/components/ui/button";
 import { FaGoogle } from "react-icons/fa";
 import React from "react";
 import { useUser } from "@/hooks/user";
-import { redirect } from "next/navigation";
 
 export default function LoginPage() {
-  const { user, isLoading, login } = useUser();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (user) {
-    redirect("/");
-  }
+  const { login } = useUser();
 
   return (
     <div className="flex flex-col items-center justify-center h-screen space-y-4 bg-gradient-to-t from-green-200 to-white to-[50%]">
@@ -26,7 +18,7 @@ export default function LoginPage() {
       <p className="text-center text-lg text-muted-foreground">
         Find friends, join activities, and <br /> connect with Nisit Kaset.
       </p>
-      {/* App Logo */}
+      {/* TODO: App Logo */}
       <Button className="px-12 py-5" onClick={() => login()}>
         <FaGoogle />
         Login with Google (@ku.th)

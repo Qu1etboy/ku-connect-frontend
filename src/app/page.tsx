@@ -1,5 +1,6 @@
 "use client";
 
+import AuthProtected from "@/components/auth";
 import Menu from "@/components/menu";
 import ProfileSwiper from "@/components/profile-swiper";
 import { useEffect, useState } from "react";
@@ -58,11 +59,13 @@ export default function Home() {
   }, [inView]);
 
   return (
-    <main className="h-dvh flex flex-col">
-      <ProfileSwiper profiles={profiles}>
-        <p ref={ref}></p>
-      </ProfileSwiper>
-      <Menu />
-    </main>
+    <AuthProtected>
+      <main className="h-dvh flex flex-col">
+        <ProfileSwiper profiles={profiles}>
+          <p ref={ref}></p>
+        </ProfileSwiper>
+        <Menu />
+      </main>
+    </AuthProtected>
   );
 }

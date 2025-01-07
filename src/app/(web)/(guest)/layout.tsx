@@ -4,20 +4,21 @@ import { useUser } from "@/hooks/user";
 import { redirect } from "next/navigation";
 import React from "react";
 
-type AuthProtectedProps = {
+/**
+ * Guest pages, user who not login can visit.
+ */
+export default function GuestLayout({
+  children,
+}: {
   children: React.ReactNode;
-};
-
-export default function AuthProtected({ children }: AuthProtectedProps) {
+}) {
   const { user, isLoading } = useUser();
 
   if (isLoading) {
     return null;
   }
-
-  if (!user) {
-    redirect("/login");
+  if (user) {
+    redirect("/");
   }
-
   return <div>{children}</div>;
 }
