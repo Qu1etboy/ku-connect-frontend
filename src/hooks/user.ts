@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/client";
 import { getUrl } from "@/utils/url";
 import { UserMetadata } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type LoginOption = {
@@ -11,6 +12,7 @@ export function useUser() {
   const supabase = createClient();
   const [user, setUser] = useState<UserMetadata | null>();
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const login = (options: LoginOption = { redirectTo: "/" }) => {
     supabase.auth.signInWithOAuth({
@@ -37,6 +39,7 @@ export function useUser() {
       throw error;
     }
     setUser(null);
+    router.push("/login");
   };
 
   useEffect(() => {
