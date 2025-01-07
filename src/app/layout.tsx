@@ -4,6 +4,7 @@ import "./globals.css";
 import MobileContainer from "@/components/container/mobile";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "@/components/providers";
+import InstallPrompt from "@/components/install-prompt";
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -37,6 +38,7 @@ export default function RootLayout({
         <Providers>
           <MobileContainer>
             {children}
+            <InstallPrompt />
             <Toaster />
           </MobileContainer>
         </Providers>
