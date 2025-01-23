@@ -14,8 +14,8 @@ const initialProfiles = [
       "https://upload.wikimedia.org/wikipedia/commons/c/ce/20241108_Han_Sohee_for_BOUCHERON_05.jpg",
   },
   {
-    name: "Mhoo Toey",
-    description: "🐷",
+    name: "Toey Napatsorn",
+    description: "...",
     image: "https://media.femalemag.com.sg/public/2021/11/han-so-hee-7.jpg",
   },
   {
