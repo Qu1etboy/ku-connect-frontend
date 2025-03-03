@@ -1,10 +1,10 @@
+import MobileContainer from "@/components/container/mobile";
+import InstallPrompt from "@/components/install-prompt";
+import Providers from "@/components/providers";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import MobileContainer from "@/components/container/mobile";
-import { Toaster } from "@/components/ui/sonner";
-import Providers from "@/components/providers";
-import InstallPrompt from "@/components/install-prompt";
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
+  },
+  icons: {
+    icon: "/ku-connect-bg-white.svg",
   },
 };
 

@@ -1,8 +1,8 @@
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import Menu from "../menu";
 import { ThreeDot } from "react-loading-indicators";
+import Menu from "../menu";
 
 type MainLayoutProps = {
   title: string;
@@ -18,22 +18,22 @@ export default function MainLayout({
   children,
 }: MainLayoutProps) {
   return (
-    <div className="flex flex-col min-h-dvh">
-      <header className="sticky top-0 z-10 bg-white pt-safe border-b shadow-sm">
-        <div className="grid grid-cols-12 place-content-center text-center header-safe">
+    <div className="flex h-screen flex-col">
+      <header className="pt-safe sticky top-0 z-10 border-b bg-white shadow-sm">
+        <div className="header-safe grid grid-cols-12 place-content-center text-center">
           {backUrl && (
-            <Link href={backUrl} className="pt-0.5 pl-4">
+            <Link href={backUrl} className="pl-4 pt-0.5">
               <ChevronLeft />
             </Link>
           )}
-          <h1 className="text-lg md:text-xl font-bold col-start-4 col-span-6">
+          <h1 className="col-span-6 col-start-4 text-lg font-bold md:text-xl">
             {title}
           </h1>
         </div>
       </header>
 
       {isLoading ? (
-        <main className="flex-1 h-full w-full flex justify-center items-center">
+        <main className="flex h-full w-full flex-1 items-center justify-center">
           <ThreeDot color="#bbf7d0" size="medium" />
         </main>
       ) : (
