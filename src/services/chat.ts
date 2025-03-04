@@ -1,7 +1,7 @@
 import { instance } from "@/utils/axios";
 import { getHeaders } from "./services";
 
-export interface Chat {
+export interface ListChatResponse {
   chat_id: string;
   name: string;
   avatar: string;
@@ -11,17 +11,34 @@ export interface Chat {
 
 export interface ChatMessage {
   id: string;
-  chatId: string;
-  authorId: string;
+  fromMe: boolean;
   content: string;
   createdTime: string;
-  updatedTime: string;
   isRead: boolean;
 }
 
 export async function listChat() {
   const headers = await getHeaders();
-  const resp = await instance.get<Chat[]>(`/api/chats`, {
+  const resp = await instance.get<ListChatResponse[]>(`/api/chats`, {
+    headers,
+  });
+  console.log(resp);
+  return resp.data;
+}
+
+export interface TargetUser {
+  name: string;
+  avatar: string;
+}
+
+export interface GetChatResponse {
+  target: TargetUser;
+  messages: Record<string, ChatMessage[]>;
+}
+
+export async function getChat(chatId: string) {
+  const headers = await getHeaders();
+  const resp = await instance.get<GetChatResponse>(`/api/chats/${chatId}`, {
     headers,
   });
   console.log(resp);

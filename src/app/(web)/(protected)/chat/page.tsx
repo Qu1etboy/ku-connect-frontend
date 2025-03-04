@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const MAX_DISPLAY = 4;
 
-const friends = {
+const connectionRequest = {
   total: 3,
   avatars: [
     "https://i.pravatar.cc/150?img=1",
@@ -22,13 +22,16 @@ export default function ChatListPage() {
   const router = useRouter();
 
   const { data: chatList } = useQuery({
-    queryKey: ["chatList"],
+    queryKey: ["listChat"],
     queryFn: () => listChat(),
   });
 
   const handleChatRoomClick = (chatId: string) => {
     router.push(`/chat/${chatId}`);
   };
+
+  // TODO: update connection request to use real data
+
   return (
     <MainLayout title="Chat">
       <div className="flex h-full flex-col">
@@ -36,26 +39,28 @@ export default function ChatListPage() {
         <div className="flex items-center space-x-4 px-4 py-7">
           {/* Avatar */}
           <div className="flex -space-x-5">
-            {friends.avatars.slice(0, MAX_DISPLAY).map((avatar, index) => (
-              <Avatar key={index} className="h-10 w-10">
-                <AvatarImage src={avatar} alt="avatar" />
-                <AvatarFallback>U</AvatarFallback>
-              </Avatar>
-            ))}
+            {connectionRequest.avatars
+              .slice(0, MAX_DISPLAY)
+              .map((avatar, index) => (
+                <Avatar key={index} className="h-10 w-10">
+                  <AvatarImage src={avatar} alt="avatar" />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+              ))}
             {/* More */}
-            {friends.total > MAX_DISPLAY && (
+            {connectionRequest.total > MAX_DISPLAY && (
               <div className="z-10 flex h-10 w-10 items-center justify-center rounded-full bg-gray-200">
                 <p className="text-sm font-semibold text-gray-500">
-                  {friends.total > 99 + MAX_DISPLAY
+                  {connectionRequest.total > 99 + MAX_DISPLAY
                     ? "99+"
-                    : `+${friends.total - MAX_DISPLAY}`}
+                    : `+${connectionRequest.total - MAX_DISPLAY}`}
                 </p>
               </div>
             )}
           </div>
           {/* Text */}
           <p className="text-base font-semibold">
-            {friends.total} People want to be friend
+            {connectionRequest.total} People want to be friend
           </p>
         </div>
         {/* Chat */}

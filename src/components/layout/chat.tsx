@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { ThreeDot } from "react-loading-indicators";
 import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 import { Textarea } from "../ui/textarea";
 
 type ChatLayoutProps = {
@@ -27,9 +28,13 @@ export default function ChatLayout({
               <ChevronLeft />
             </Link>
           )}
-          <h1 className="col-span-6 col-start-4 text-lg font-bold md:text-xl">
-            {title}
-          </h1>
+          {isLoading ? (
+            <Skeleton className="col-span-6 col-start-5 h-4 w-[180px] self-center" />
+          ) : (
+            <h1 className="col-span-6 col-start-4 text-lg font-bold md:text-xl">
+              {title}
+            </h1>
+          )}
         </div>
       </header>
 
