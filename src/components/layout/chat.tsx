@@ -10,7 +10,9 @@ type ChatLayoutProps = {
   title: string;
   backUrl: string;
   isLoading?: boolean;
+  handleSendMessage: (content: string) => void;
   children: React.ReactNode;
+  onclick?: () => void;
 };
 
 export default function ChatLayout({
@@ -18,6 +20,7 @@ export default function ChatLayout({
   backUrl,
   isLoading,
   children,
+  handleSendMessage,
 }: ChatLayoutProps) {
   return (
     <div className="flex min-h-dvh flex-col">
@@ -45,18 +48,23 @@ export default function ChatLayout({
       ) : (
         <main className="flex-1">{children}</main>
       )}
-      <MessageInput />
+      <MessageInput onSend={handleSendMessage} />
     </div>
   );
 }
 
-const MessageInput = () => {
+interface MessageInputProps {
+  onSend: (message: string) => void;
+}
+
+const MessageInput = ({ onSend }: MessageInputProps) => {
   const [message, setMessage] = useState("");
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
   const handleSend = () => {
-    console.log(message);
+    onSend(message);
+    setMessage("");
   };
   return (
     <div className="flex space-x-4 border-t border-gray-100 p-4 shadow-sm">

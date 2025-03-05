@@ -8,9 +8,13 @@ type LoginOption = {
   redirectTo: string;
 };
 
+export interface User extends UserMetadata {
+  userId: string;
+}
+
 export function useUser() {
   const supabase = createClient();
-  const [user, setUser] = useState<UserMetadata | null>();
+  const [user, setUser] = useState<User | null>();
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
@@ -47,7 +51,10 @@ export function useUser() {
       setIsLoading(true);
       const { data } = await supabase.auth.getSession();
       console.log(data);
-      setUser(data?.session?.user.user_metadata);
+      setUser({
+        ...data?.session?.user.user_metadata,
+        userId: data?.session?.user.id ?? "",
+      });
       setIsLoading(false);
     };
 

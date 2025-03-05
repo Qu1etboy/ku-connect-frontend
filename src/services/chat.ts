@@ -11,10 +11,10 @@ export interface ListChatResponse {
 
 export interface ChatMessage {
   id: string;
-  fromMe: boolean;
+  authorId: string;
   content: string;
-  createdTime: string;
   isRead: boolean;
+  createdTime: string;
 }
 
 export async function listChat() {
@@ -22,7 +22,6 @@ export async function listChat() {
   const resp = await instance.get<ListChatResponse[]>(`/api/chats`, {
     headers,
   });
-  console.log(resp);
   return resp.data;
 }
 
@@ -33,7 +32,7 @@ export interface TargetUser {
 
 export interface GetChatResponse {
   target: TargetUser;
-  messages: Record<string, ChatMessage[]>;
+  messages: ChatMessage[];
 }
 
 export async function getChat(chatId: string) {
@@ -41,6 +40,5 @@ export async function getChat(chatId: string) {
   const resp = await instance.get<GetChatResponse>(`/api/chats/${chatId}`, {
     headers,
   });
-  console.log(resp);
   return resp.data;
 }
