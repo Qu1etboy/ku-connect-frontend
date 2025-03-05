@@ -51,10 +51,14 @@ export function useUser() {
       setIsLoading(true);
       const { data } = await supabase.auth.getSession();
       console.log(data);
-      setUser({
-        ...data?.session?.user.user_metadata,
-        userId: data?.session?.user.id ?? "",
-      });
+      setUser(
+        data.session
+          ? {
+              ...data?.session?.user.user_metadata,
+              userId: data?.session?.user.id ?? "",
+            }
+          : null,
+      );
       setIsLoading(false);
     };
 
