@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/ku-connect-bg-white.svg",
   },
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 
 export const viewport: Viewport = {
