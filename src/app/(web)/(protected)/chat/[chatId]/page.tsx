@@ -76,7 +76,7 @@ export default function ChatPage() {
 
     // Socket events
     const handleReceiveMessage = (newMessage: ChatMessage) => {
-      console.log(user?.name, user?.userId === newMessage.authorId ? "Sent" : "Received", newMessage);
+      console.log(user?.name, user?.userId === newMessage.authorId ? "Sent" : "Received", newMessage.content);
       setMessages((prev) => [...prev, newMessage]);
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
