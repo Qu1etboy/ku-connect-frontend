@@ -112,6 +112,7 @@ export default function ChatPage() {
     } else {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
+    console.log("messages", messages[messages.length - 1]);
   }, [messages]);
 
   useEffect(() => {
