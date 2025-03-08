@@ -5,7 +5,9 @@ import {
   interestsForm,
   nisitInfoForm,
   personalInfoForm,
+  SystemInterest,
 } from "@/data/form";
+import { User } from "@/hooks/user";
 
 export const fieldOfStudy: {
   [key: string]: { value: string; label: string }[];
@@ -197,87 +199,59 @@ export const fieldOfStudy: {
   ],
 };
 
-export const data: OnboardingData = {
-  steps: [
-    {
-      step: 1,
-      title:
-        "Welcome to KU Connect,\n<green>Winai Klahan!<green>\nLet's set up your profile.",
-      description: "",
-      skippable: false,
-      card: true,
-      group: [
-        {
-          form: nisitInfoForm,
-        },
-      ],
-    },
-    {
-      step: 2,
-      skippable: true,
-      card: true,
-      title: "Tell us more about yourself",
-      description:
-        "Add optional details to personalize your profile. You can skip this step if you'd like.",
-      group: [
-        {
-          form: personalInfoForm,
-        },
-      ],
-    },
-    {
-      step: 3,
-      skippable: true,
-      card: true,
-      title: "How can people reach you?",
-      description:
-        "Add your contact details. People can only see this after you match with them.",
-      group: [
-        {
-          form: contactForm,
-        },
-      ],
-    },
-    {
-      step: 4,
-      title: "What are you interested in?",
-      description:
-        "Choose what you're passionate about to find your perfect connections.",
-      group: [
-        {
-          form: interestsForm,
-        },
-      ],
-    },
-  ],
-};
-
-export const formSchema = z.object({
-  faculty: z.string().min(1, "Faculty should not be empty"),
-  department: z.string().min(1, "Department should not be empty"),
-  year: z.string().min(1, "Year should not be empty"),
-  name: z.string(),
-  bio: z.string(),
-  birthday: z.date(),
-  line: z.string(),
-  facebook: z.string(),
-  instagram: z.string(),
-  other: z.string(),
-  interests: z.array(z.string()),
-});
-
-export type ProfileForm = z.infer<typeof formSchema>;
-
-export const defaultProfile = {
-  faculty: "",
-  department: "",
-  year: "",
-  name: "",
-  bio: "",
-  birthdate: undefined,
-  line: "",
-  facebook: "",
-  instagram: "",
-  other: "",
-  interests: [],
-};
+export const getData = (user: User, interests: SystemInterest[]): OnboardingData => {
+  return {
+    steps: [
+      {
+        step: 1,
+        title:
+          `Welcome to KU Connect,\n<green>${user.full_name}!<green>\nLet's set up your profile.`,
+        description: "",
+        skippable: true,
+        card: true,
+        group: [
+          {
+            form: nisitInfoForm,
+          },
+        ],
+      },
+      {
+        step: 2,
+        skippable: true,
+        card: true,
+        title: "Tell us more about yourself",
+        description:
+          "Add optional details to personalize your profile. You can skip this step if you'd like.",
+        group: [
+          {
+            form: personalInfoForm,
+          },
+        ],
+      },
+      {
+        step: 3,
+        skippable: true,
+        card: true,
+        title: "How can people reach you?",
+        description:
+          "Add your contact details. People can only see this after you match with them.",
+        group: [
+          {
+            form: contactForm,
+          },
+        ],
+      },
+      {
+        step: 4,
+        title: "What are you interested in?",
+        description:
+          "Choose what you're passionate about to find your perfect connections.",
+        group: [
+          {
+            form: interestsForm(interests),
+          },
+        ],
+      },
+    ],
+  };
+}

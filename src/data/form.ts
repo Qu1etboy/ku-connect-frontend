@@ -1,4 +1,5 @@
 import { FormDataType } from "@/components/form/type";
+import { z } from "zod";
 
 export const contactForm: FormDataType[] = [
   {
@@ -29,10 +30,11 @@ export const contactForm: FormDataType[] = [
 
 export const personalInfoForm: FormDataType[] = [
   {
-    id: "name",
+    id: "displayName",
     type: "text",
     label: "Display Name",
     placeholder: "Enter your name",
+    required: true,
   },
   {
     id: "bio",
@@ -71,7 +73,6 @@ export const nisitInfoForm: FormDataType[] = [
       { value: "veterinary-technology", label: "Veterinary Technology" },
       { value: "environment", label: "Environment" },
     ],
-    required: true,
   },
   {
     id: "department",
@@ -90,8 +91,9 @@ export const nisitInfoForm: FormDataType[] = [
       { value: "2", label: "2nd year" },
       { value: "3", label: "3rd year" },
       { value: "4", label: "4th year" },
+      { value: ">4", label: "More than 4 years" },
+      { value: "graduated", label: "Graduated" },
     ],
-    required: true,
   },
 ];
 
@@ -285,62 +287,40 @@ export const fieldOfStudy: {
   ],
 };
 
-export const interestsForm = [
+export type SystemInterest = {
+  id: string,
+  name: string,
+}
+
+/**
+ * Interests form take system interests and return form data
+ * 
+ * @param systemInterests - data from backend
+ * @returns form data
+ */
+export const interestsForm = (systemInterests: SystemInterest[]) => [
   {
     id: "interests",
     type: "pill",
-    data: [
-      { value: "1", label: "📚 Study Groups" },
-      { value: "2", label: "⚽ Sports" },
-      { value: "3", label: "🎮 Gaming" },
-      { value: "4", label: "🎶 Music" },
-      { value: "5", label: "📸 Photography" },
-      { value: "6", label: "✈️ Travel" },
-      { value: "7", label: "🌱 Environmental Causes" },
-      { value: "8", label: "🤝 Networking" },
-      { value: "9", label: "💻 Coding" },
-      { value: "10", label: "🧑‍🏫 Tutoring" },
-      { value: "11", label: "🛠️ Skill Sharing" },
-      { value: "12", label: "🎨 Art" },
-      { value: "13", label: "🎭 Theatre" },
-      { value: "14", label: "🧘 Yoga" },
-      { value: "15", label: "📖 Reading" },
-      { value: "16", label: "🏆 Competitions" },
-      { value: "17", label: "🏕️ Camps" },
-      { value: "18", label: "💬 Language Exchange" },
-      { value: "19", label: "🎓 Internships" },
-      { value: "20", label: "🌟 Personal Growth" },
-      { value: "21", label: "🍳 Cooking" },
-      { value: "22", label: "🧩 Puzzles" },
-      { value: "23", label: "🕹️ Esports" },
-      { value: "24", label: "🏋️‍♀️ Fitness" },
-      { value: "25", label: "🌌 Astronomy" },
-      { value: "26", label: "💡 Innovation" },
-      { value: "27", label: "🐾 Pet Care" },
-      { value: "28", label: "🌍 Volunteering" },
-      { value: "29", label: "🛤️ Adventure" },
-      { value: "30", label: "🏖️ Beach Activities" },
-      { value: "31", label: "🧵 Crafting" },
-      { value: "32", label: "🍿 Movies" },
-      { value: "33", label: "🗺️ Geography" },
-      { value: "34", label: "🧑‍🍳 Baking" },
-      { value: "35", label: "💬 Public Speaking" },
-      { value: "36", label: "🚴 Cycling" },
-      { value: "37", label: "🚶 Hiking" },
-      { value: "38", label: "🥋 Martial Arts" },
-      { value: "39", label: "🤖 Robotics" },
-      { value: "40", label: "✍️ Writing" },
-      { value: "41", label: "🧑‍🎨 Graphic Design" },
-      { value: "42", label: "💃 Dance" },
-      { value: "43", label: "🌾 Gardening" },
-      { value: "44", label: "🍹 Mixology" },
-      { value: "45", label: "🎤 Singing" },
-      { value: "46", label: "🎥 Filmmaking" },
-      { value: "47", label: "🎧 Podcasting" },
-      { value: "48", label: "🧑‍🔬 Research Opportunities" },
-      { value: "49", label: "💼 Part-time Jobs" },
-      { value: "50", label: "🧘‍♂️ Meditation" },
-      { value: "51", label: "🧠 Mental Wellness" },
-    ],
+    data: systemInterests.map((interest) => ({
+      value: interest.id,
+      label: interest.name,
+    })),
   },
 ];
+
+export const formSchema = z.object({
+  faculty: z.string(),
+  department: z.string(),
+  year: z.string(),
+  displayName: z.string(),
+  bio: z.string(),
+  birthdate: z.date(),
+  line: z.string(),
+  facebook: z.string(),
+  instagram: z.string(),
+  other: z.string(),
+  interests: z.array(z.string()),
+});
+
+export type ProfileForm = z.infer<typeof formSchema>;
