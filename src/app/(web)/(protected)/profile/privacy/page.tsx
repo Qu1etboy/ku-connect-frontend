@@ -13,50 +13,39 @@ const group: {
   form?: FormDataType[];
 }[] = [
   {
-    name: "Notifications",
-    description: "Manage how you receive app notifications.",
+    name: "Profile Visibility",
+    description:
+      "Control who can see your profile details and connect with you.",
     form: [
       {
-        id: "new_message",
-        type: "switch",
-        label: "New Messages",
-      },
-      {
-        id: "new_connection_requests",
-        type: "switch",
-        label: "New Connection Requests",
-      },
-      {
-        id: "connection_request_accepted",
-        type: "switch",
-        label: "Connection Request Accepted",
+        id: "profileVisibility",
+        type: "radio",
+        data: [
+          { value: "1", label: "Public" },
+          { value: "2", label: "Only Matches" },
+          { value: "3", label: "Private" },
+        ],
       },
     ],
   },
   {
-    name: "Interests",
-    description: "Your interests help us recommend the best matches for you.",
+    name: "Contact Information Visibility",
+    description: "Choose who can view your contact details.",
     form: [
       {
-        id: "new_message2",
-        type: "switch",
-        label: "New Messages",
-      },
-      {
-        id: "new_connection_requests2",
-        type: "switch",
-        label: "New Connection Requests",
-      },
-      {
-        id: "connection_request_accepted2",
-        type: "switch",
-        label: "Connection Request Accepted",
+        id: "contactVisibility",
+        type: "radio",
+        data: [
+          { value: "1", label: "Public" },
+          { value: "2", label: "Only Matches" },
+          { value: "3", label: "Private" },
+        ],
       },
     ],
   },
 ];
 
-export default function PrivacySettings() {
+export default function PreferencesPage() {
   const form = useForm();
   return (
     <MainLayout title="Privacy Settings" backUrl="/profile">

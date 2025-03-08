@@ -54,7 +54,7 @@ export const getMyInterests = async () => {
 		headers,
 	});
 
-	return response.data;
+	return response.data.interests;
 };
 
 export const updateMyInterests = async (interests: string[]) => {
