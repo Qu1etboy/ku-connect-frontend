@@ -1,6 +1,7 @@
 import { ProfileForm } from "@/data/form";
 import { instance } from "@/utils/axios";
 import { getHeaders } from "./services";
+import { omitBy, isNil } from "lodash";
 
 export const createProfile = async (profile: ProfileForm) => {
 	const headers = await getHeaders();
@@ -38,9 +39,9 @@ export const getMyProfile = async () => {
 	return response.data;
 };
 
-export const updateProfile = async (id: string, profile: ProfileForm) => {
+export const updateProfile = async (profile: ProfileForm) => {
 	const headers = await getHeaders();
-	const response = await instance.put(`/api/profiles/`, profile, {
+	const response = await instance.put(`/api/profiles/`, omitBy(profile, isNil), {
 		headers,
 	});
 
