@@ -1,7 +1,35 @@
+import { toast } from "sonner";
+import ProfileCard from "./profile";
+import Profile from "./profile";
+
 type Profile = {
-  name: string;
-  description: string;
-  image: string;
+  id: string;
+  userId: string;
+  displayName: string;
+  bio: string | null;
+  birthdate: string | null;
+  faculty: string | null;
+  department: string | null;
+  year: number | null;
+  createdTime: string;
+  updatedTime: string;
+  image: string | null;
+  settings: {
+    id: string;
+    userId: string;
+    profileVisibility: "public" | "connected" | "private";
+    contactInfoVisibility: "public" | "connected" | "private";
+    notiNewMessage: boolean;
+    notiNewConnectionRequest: boolean;
+    notiNewConnectionRequestAccept: boolean;
+    createdTime: string;
+    updatedTime: string;
+  };
+  similarity: number;
+  interests: {
+    id: string;
+    name: string;
+  }[];
 };
 
 type ProfileSwiperProps = {
@@ -13,22 +41,35 @@ export default function ProfileSwiper({
   profiles,
   children,
 }: ProfileSwiperProps) {
+  const onLiked = (id: string) => {
+    // TODO: Send like request to backend
+    toast.success("You liked " + id, {
+      position: "top-center",
+    });
+    console.log("Liked", id);
+
+    // TODO: Add animation
+  };
+
+  const onDisliked = (id: string) => {
+    // TODO: Send dislike request to backend
+    toast.error("You disliked " + id, {
+      position: "top-center",
+    });
+    console.log("Disliked", id);
+
+    // TODO: Add animation
+  };
+
   return (
-    <div className="snap-y snap-mandatory flex-1 overflow-scroll no-scrollbar">
+    <div className="no-scrollbar flex-1 snap-y snap-mandatory overflow-scroll">
       {profiles.map((profile, index) => (
-        <div key={index} className="snap-center snap-always h-full w-full">
-          <div className="h-[55%]">
-            <img
-              src={profile.image}
-              alt={`Image ${index + 1}`}
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-            />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold">{profile.name}</h1>
-            <p>{profile.description}</p>
-          </div>
-        </div>
+        <ProfileCard
+          key={profile.id}
+          profile={profile}
+          onLiked={() => onLiked(profile.id)}
+          onDisliked={() => onDisliked(profile.id)}
+        />
       ))}
       {children}
     </div>

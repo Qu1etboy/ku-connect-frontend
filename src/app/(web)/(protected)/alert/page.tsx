@@ -78,28 +78,28 @@ export default function AlertPage() {
               key={noti.id}
               href=""
               className={cn(
-                "flex p-4 border-b hover:bg-green-100 duration-200",
-                noti.readAt ? "bg-white" : "bg-green-50"
+                "flex border-b p-4 duration-200 hover:bg-green-100",
+                noti.readAt ? "bg-white" : "bg-green-50",
               )}
             >
               {/* TODO: Icon should be display from `noti.icon` but for now just mock as a Mail */}
-              <Mail className="mr-2 my-auto w-12" />
+              <Mail className="my-auto mr-2 w-12" />
               <section className="space-y-2">
-                <h2 className="text-sm md:text-base font-bold">
+                <h2 className="text-sm font-bold md:text-base">
                   {noti.data.title}
                 </h2>
-                <p className="text-xs md:text-sm text-muted-foreground max-w-[35ch]">
+                <p className="max-w-[35ch] text-xs text-muted-foreground md:text-sm">
                   {noti.data.message}
                 </p>
               </section>
-              <time className="pl-2 ml-auto text-xs md:text-sm text-muted-foreground">
+              <time className="ml-auto pl-2 text-xs text-muted-foreground md:text-sm">
                 {formatShortDistanceToNow(new Date(noti.createdTime))}
               </time>
             </Link>
           ))}
         </InfiniteScroll>
       ) : (
-        <div className="text-center mt-24">You have no new notification.</div>
+        <div className="mt-24 text-center">You have no new notification.</div>
       )}
     </MainLayout>
   );

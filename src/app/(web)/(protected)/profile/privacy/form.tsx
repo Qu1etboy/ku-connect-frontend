@@ -7,12 +7,13 @@ import { Settings, updateSettings } from "@/services/settings";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import {
+  PrivacyFormGroup,
+  PrivacyFormValues,
+  PrivacyVisibilityOption,
+} from "./types";
 
-const group: {
-  name?: string;
-  description?: string;
-  form?: FormDataType[];
-}[] = [
+const privacyFormGroups: PrivacyFormGroup[] = [
   {
     name: "Profile Visibility",
     description:
@@ -22,9 +23,12 @@ const group: {
         id: "profileVisibility",
         type: "radio",
         data: [
-          { value: "public", label: "Public" },
-          { value: "connected", label: "Only Connected" },
-          { value: "private", label: "Private" },
+          { value: "public" as PrivacyVisibilityOption, label: "Public" },
+          {
+            value: "connected" as PrivacyVisibilityOption,
+            label: "Only Connected",
+          },
+          { value: "private" as PrivacyVisibilityOption, label: "Private" },
         ],
       },
     ],
@@ -37,9 +41,12 @@ const group: {
         id: "contactInfoVisibility",
         type: "radio",
         data: [
-          { value: "public", label: "Public" },
-          { value: "connected", label: "Only Connected" },
-          { value: "private", label: "Private" },
+          { value: "public" as PrivacyVisibilityOption, label: "Public" },
+          {
+            value: "connected" as PrivacyVisibilityOption,
+            label: "Only Connected",
+          },
+          { value: "private" as PrivacyVisibilityOption, label: "Private" },
         ],
       },
     ],
@@ -51,15 +58,17 @@ type PrivacyFormProps = {
 };
 
 export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
-  const form = useForm({
+  const form = useForm<PrivacyFormValues>({
     defaultValues: {
-      profileVisibility: initialSettings.profileVisibility,
-      contactInfoVisibility: initialSettings.contactInfoVisibility,
+      profileVisibility:
+        initialSettings.profileVisibility as PrivacyVisibilityOption,
+      contactInfoVisibility:
+        initialSettings.contactInfoVisibility as PrivacyVisibilityOption,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: updateSettings,
+    mutationFn: (data: PrivacyFormValues) => updateSettings(data),
     onSuccess: () => {
       toast("Settings updated successfully", {
         icon: "✅",
@@ -74,7 +83,7 @@ export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
     },
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: PrivacyFormValues) => {
     if (config.ENV === "development") {
       toast("Form Submitted", {
         description: <pre>{JSON.stringify(data, null, 2)}</pre>,
@@ -92,7 +101,7 @@ export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        {group.map((group) => (
+        {privacyFormGroups.map((group) => (
           <div key={group.name} className="border-b p-6">
             <h2 className="mb-3 font-bold">{group.name}</h2>
             <p className="mb-6 text-sm text-muted-foreground">
