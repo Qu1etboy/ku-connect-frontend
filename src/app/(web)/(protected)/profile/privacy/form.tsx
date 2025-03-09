@@ -1,14 +1,12 @@
-"use client";
-
 import InputField from "@/components/form/input";
 import { FormDataType } from "@/components/form/type";
+import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { updateSettings, type Settings } from "@/services/settings";
 import { config } from "@/config";
-import { toast } from "sonner";
+import { Settings, updateSettings } from "@/services/settings";
 import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const group: {
   name?: string;
@@ -16,46 +14,52 @@ const group: {
   form?: FormDataType[];
 }[] = [
   {
-    name: "Notifications",
-    description: "Manage how you receive app notifications.",
+    name: "Profile Visibility",
+    description:
+      "Control who can see your profile details and connect with you.",
     form: [
       {
-        id: "notiNewMessage",
-        type: "switch",
-        label: "New Messages",
+        id: "profileVisibility",
+        type: "radio",
+        data: [
+          { value: "public", label: "Public" },
+          { value: "connected", label: "Only Connected" },
+          { value: "private", label: "Private" },
+        ],
       },
+    ],
+  },
+  {
+    name: "Contact Information Visibility",
+    description: "Choose who can view your contact details.",
+    form: [
       {
-        id: "notiNewConnectionRequest",
-        type: "switch",
-        label: "New Connection Requests",
-      },
-      {
-        id: "notiNewConnectionRequestAccept",
-        type: "switch",
-        label: "Connection Request Accepted",
+        id: "contactInfoVisibility",
+        type: "radio",
+        data: [
+          { value: "public", label: "Public" },
+          { value: "connected", label: "Only Connected" },
+          { value: "private", label: "Private" },
+        ],
       },
     ],
   },
 ];
 
-export default function PreferencesForm({
-  initialSettings,
-}: {
+type PrivacyFormProps = {
   initialSettings: Settings;
-}) {
+};
+
+export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
   const form = useForm({
     defaultValues: {
-      notiNewMessage: initialSettings.notiNewMessage,
-      notiNewConnectionRequest: initialSettings.notiNewConnectionRequest,
-      notiNewConnectionRequestAccept:
-        initialSettings.notiNewConnectionRequestAccept,
+      profileVisibility: initialSettings.profileVisibility,
+      contactInfoVisibility: initialSettings.contactInfoVisibility,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: (settings: Settings) => {
-      return updateSettings(settings);
-    },
+    mutationFn: updateSettings,
     onSuccess: () => {
       toast("Settings updated successfully", {
         icon: "✅",
@@ -87,7 +91,7 @@ export default function PreferencesForm({
 
   return (
     <Form {...form}>
-      <form onChange={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         {group.map((group) => (
           <div key={group.name} className="border-b p-6">
             <h2 className="mb-3 font-bold">{group.name}</h2>
@@ -107,6 +111,11 @@ export default function PreferencesForm({
             ))}
           </div>
         ))}
+        <div className="mx-3">
+          <Button type="submit" className="mb-16 mt-6 w-full">
+            Save
+          </Button>
+        </div>
       </form>
     </Form>
   );
