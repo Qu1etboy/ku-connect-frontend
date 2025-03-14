@@ -12,5 +12,5 @@ export function getProfileImageUrl(path: string) {
     return path;
   }
 
-  return config.SUPABASE_STORAGE_URL + "/avatars/" + path;
+  return config.SUPABASE_URL + "/storage/v1/object/public/avatars/" + path;
 }
