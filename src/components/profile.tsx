@@ -2,6 +2,7 @@ import { Profile } from "@/services/profile";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { HeartHandshake, HeartOff } from "lucide-react";
+import { getProfileImageUrl } from "@/utils/url";
 
 type ProfileCardProps = {
   profile: Profile;
@@ -46,7 +47,7 @@ export default function ProfileCard({
     <div className="relative h-full w-full snap-center snap-always">
       <div className="h-[55%]">
         <img
-          src={profile.image ?? ""}
+          src={getProfileImageUrl(profile.image ?? "")}
           alt={profile.displayName}
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
         />

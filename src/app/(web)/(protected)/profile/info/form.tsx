@@ -16,9 +16,11 @@ import { config } from "@/config";
 import { contactForm, nisitInfoForm, personalInfoForm } from "@/data/form";
 import { User, useUser } from "@/hooks/user";
 import { updateProfile } from "@/services/profile";
+import { upload } from "@/utils/storage";
+import { getProfileImageUrl } from "@/utils/url";
 import { useMutation } from "@tanstack/react-query";
-import { ChevronRightIcon } from "lucide-react";
-import React from "react";
+import { CameraIcon, ChevronRightIcon } from "lucide-react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -33,28 +35,36 @@ const groups = [
   },
 ];
 
-export default function ProfileInfomationForm({ user, defaultValues }: { user: User, defaultValues: any }) {
+export default function ProfileInfomationForm({
+  user,
+  defaultValues,
+}: {
+  user: User;
+  defaultValues: any;
+}) {
   const form = useForm({
     defaultValues,
   });
 
-	const mutation = useMutation({
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const mutation = useMutation({
     mutationFn: (profile: any) => {
       return updateProfile(profile);
     },
-		onSuccess: () => {
-			toast("Profile updated successfully", {
-				position: "top-center",
-				icon: "✅",
-			});
-		},
-		onError: () => {
-			toast("Failed to update profile", {
-				position: "top-center",
-				icon: "❌",
-			});
-		},
-  })
+    onSuccess: () => {
+      toast("Profile updated successfully", {
+        position: "top-center",
+        icon: "✅",
+      });
+    },
+    onError: () => {
+      toast("Failed to update profile", {
+        position: "top-center",
+        icon: "❌",
+      });
+    },
+  });
 
   const onSubmit = (data: any) => {
     if (config.ENV === "development") {
@@ -66,80 +76,121 @@ export default function ProfileInfomationForm({ user, defaultValues }: { user: U
     mutation.mutate(data);
   };
 
-	if (mutation.isPending) {
-		return <div>Loading...</div>;
-	}
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const data = await upload(
+        file,
+        user?.userId + "/" + file.name + "-" + Date.now(),
+        "avatars",
+      );
+      console.log(data);
+
+      form.setValue("image", data.path);
+
+      mutation.mutate({
+        ...form.getValues(),
+        image: data.path,
+      });
+    }
+  };
+
+  if (mutation.isPending) {
+    return <div>Loading...</div>;
+  }
 
   return (
-      <div className="pb-12">
-        <div className="flex flex-col items-center">
-          <Avatar className="w-[150px] h-[150px] my-6">
-            <AvatarImage src={user?.avatar_url} alt={user?.name} />
-            <AvatarFallback>{user?.name[0]}</AvatarFallback>
+    <div className="pb-12">
+      <div className="flex flex-col items-center">
+        <div className="relative">
+          <Avatar
+            className="my-6 h-[150px] w-[150px] cursor-pointer hover:opacity-80"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <AvatarImage
+              src={getProfileImageUrl(form.getValues("image"))}
+              alt={user?.name}
+              className="object-cover"
+            />
+            <AvatarFallback>{form.getValues("displayName")[0]}</AvatarFallback>
           </Avatar>
-          <p className="font-semibold text-lg">{user?.name}</p>
-        </div>
-
-        {groups.map((group) => (
-          <div key={group.name} className="mt-6">
-            <h2 className="px-3 mb-3 font-semibold text-muted-foreground">
-              {group.name}
-            </h2>
-            {group.fields.map((field) => (
-              <Drawer key={field.id}>
-                <DrawerTrigger asChild>
-                  <div className="p-4 text-sm md:text-base flex justify-between cursor-pointer hover:bg-gray-50">
-                    <p>{field.label}</p>
-                    <div className="flex justify-end">
-                      {form.getValues(field.id) ? (
-                        <p className="text-green-600 max-w-[25ch] truncate">
-                          {form.getValues(field.id)}
-                        </p>
-                      ) : (
-                        <p className="text-muted-foreground">
-                          {field.placeholder}
-                        </p>
-                      )}
-                      <ChevronRightIcon
-                        className="text-muted-foreground ml-2"
-                        width={20}
-                      />
-                    </div>
-                  </div>
-                </DrawerTrigger>
-                <DrawerContent className="px-6 md:px-0 h-[90%] flex items-center">
-                  <Form {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(onSubmit)}
-                      className="max-w-md w-full"
-                    >
-                      <InputField
-                        control={form.control}
-                        name={field.id}
-                        type={field.type}
-                        label={field.label}
-                        placeholder={field.placeholder}
-                        data={field.data}
-                      />
-                      <DrawerFooter className="px-0">
-                        <Button>Save</Button>
-                        <DrawerClose>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            className="w-full"
-                          >
-                            Cancel
-                          </Button>
-                        </DrawerClose>
-                      </DrawerFooter>
-                    </form>
-                  </Form>
-                </DrawerContent>
-              </Drawer>
-            ))}
+          <div
+            className="absolute bottom-[30px] right-0 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-green-500"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <CameraIcon className="h-4 w-4 text-white" />
           </div>
-        ))}
+        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          hidden
+        />
+        <p className="text-lg font-semibold">{form.getValues("displayName")}</p>
       </div>
+
+      {groups.map((group) => (
+        <div key={group.name} className="mt-6">
+          <h2 className="mb-3 px-3 font-semibold text-muted-foreground">
+            {group.name}
+          </h2>
+          {group.fields.map((field) => (
+            <Drawer key={field.id}>
+              <DrawerTrigger asChild>
+                <div className="flex cursor-pointer justify-between p-4 text-sm hover:bg-gray-50 md:text-base">
+                  <p>{field.label}</p>
+                  <div className="flex justify-end">
+                    {form.getValues(field.id) ? (
+                      <p className="max-w-[25ch] truncate text-green-600">
+                        {form.getValues(field.id)}
+                      </p>
+                    ) : (
+                      <p className="text-muted-foreground">
+                        {field.placeholder}
+                      </p>
+                    )}
+                    <ChevronRightIcon
+                      className="ml-2 text-muted-foreground"
+                      width={20}
+                    />
+                  </div>
+                </div>
+              </DrawerTrigger>
+              <DrawerContent className="flex h-[90%] items-center px-6 md:px-0">
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="w-full max-w-md"
+                  >
+                    <InputField
+                      control={form.control}
+                      name={field.id}
+                      type={field.type}
+                      label={field.label}
+                      placeholder={field.placeholder}
+                      data={field.data}
+                    />
+                    <DrawerFooter className="px-0">
+                      <Button>Save</Button>
+                      <DrawerClose>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="w-full"
+                        >
+                          Cancel
+                        </Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </form>
+                </Form>
+              </DrawerContent>
+            </Drawer>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 }

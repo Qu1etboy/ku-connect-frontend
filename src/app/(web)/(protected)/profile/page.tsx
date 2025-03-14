@@ -3,6 +3,9 @@
 import MainLayout from "@/components/layout/main";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@/hooks/user";
+import { getMyProfile } from "@/services/profile";
+import { getProfileImageUrl } from "@/utils/url";
+import { useQuery } from "@tanstack/react-query";
 import {
   ChevronRight,
   LogOut,
@@ -36,24 +39,25 @@ const sections = [
 
 export default function ProfilePage() {
   const { user, logout, isLoading } = useUser();
-
-  const getUsername = (email: string) => {
-    return "@" + email?.split("@")[0];
-  };
-
-  console.log(user);
+  const profile = useQuery({
+    queryKey: ["profile", user?.id],
+    queryFn: () => getMyProfile(),
+  });
 
   return (
-    <MainLayout title="Profile" isLoading={isLoading}>
+    <MainLayout title="Profile" isLoading={isLoading || profile.isLoading}>
       <div>
         <section className="flex items-center gap-6 px-4 py-8">
-          <Avatar className="w-[100px] h-[100px]">
-            <AvatarImage src={user?.avatar_url} alt={user?.name} />
-            <AvatarFallback>{user?.name[0]}</AvatarFallback>
+          <Avatar className="h-[100px] w-[100px]">
+            <AvatarImage
+              src={getProfileImageUrl(profile.data?.image ?? "")}
+              alt={profile.data?.displayName ?? ""}
+            />
+            <AvatarFallback>{profile.data?.displayName[0]}</AvatarFallback>
           </Avatar>
           <div>
-            <b>{user?.name}</b>
-            <p>{getUsername(user?.email)}</p>
+            <b>{profile.data?.displayName}</b>
+            <p>{user?.email}</p>
           </div>
         </section>
 
@@ -62,7 +66,7 @@ export default function ProfilePage() {
             <Link
               href={section.href}
               key={section.id}
-              className="flex gap-3 py-8 px-4 border-b hover:bg-secondary"
+              className="flex gap-3 border-b px-4 py-8 hover:bg-secondary"
             >
               {section.icon}
               <span>{section.title}</span>
@@ -71,7 +75,7 @@ export default function ProfilePage() {
           ))}
           <button
             onClick={logout}
-            className="flex gap-3 items-center py-8 px-4 border-b hover:bg-secondary w-full text-left text-destructive"
+            className="flex w-full items-center gap-3 border-b px-4 py-8 text-left text-destructive hover:bg-secondary"
           >
             <LogOut />
             Logout
