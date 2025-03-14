@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { updateMyInterests } from "@/services/profile";
 import { useMutation } from "@tanstack/react-query";
 import { config } from "@/config";
+import { LoadingScreen } from "@/components/loading";
 
 type InterestsFormProps = {
   systemInterests: SystemInterest[];
@@ -50,11 +51,6 @@ export default function InterestsForm({
     mutation.mutate(data);
   };
 
-  if (mutation.isPending) {
-    // TODO: Better loading ui
-    return <div>Loading...</div>;
-  }
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -65,6 +61,7 @@ export default function InterestsForm({
               type={field.type}
               name={field.id}
               data={field.data || []}
+              disabled={mutation.isPending}
             />
           ))}
         </div>

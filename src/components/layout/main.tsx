@@ -19,7 +19,7 @@ export default function MainLayout({
 }: MainLayoutProps) {
   return (
     <div className="flex h-screen flex-col">
-      <header className="pt-safe sticky top-0 z-10 border-b bg-white shadow-sm">
+      <header className="pt-safe sticky top-0 z-20 border-b bg-white shadow-sm">
         <div className="header-safe grid grid-cols-12 place-content-center text-center">
           {backUrl && (
             <Link href={backUrl} className="pl-4 pt-0.5">

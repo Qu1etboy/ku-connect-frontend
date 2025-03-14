@@ -9,6 +9,7 @@ import { updateSettings, type Settings } from "@/services/settings";
 import { config } from "@/config";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
+import { LoadingScreen } from "@/components/loading";
 
 const group: {
   name?: string;
@@ -80,11 +81,6 @@ export default function PreferencesForm({
     mutation.mutate(data);
   };
 
-  if (mutation.isPending) {
-    // TODO: better loading ui
-    return <div>Loading...</div>;
-  }
-
   return (
     <Form {...form}>
       <form onChange={form.handleSubmit(onSubmit)}>
@@ -103,6 +99,7 @@ export default function PreferencesForm({
                 data={field.data || []}
                 label={field.label}
                 placeholder={field.placeholder}
+                disabled={mutation.isPending}
               />
             ))}
           </div>

@@ -1,5 +1,6 @@
 import InputField from "@/components/form/input";
 import { FormDataType } from "@/components/form/type";
+import { LoadingScreen } from "@/components/loading";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { config } from "@/config";
@@ -7,13 +8,12 @@ import { Settings, updateSettings } from "@/services/settings";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  PrivacyFormGroup,
-  PrivacyFormValues,
-  PrivacyVisibilityOption,
-} from "./types";
 
-const privacyFormGroups: PrivacyFormGroup[] = [
+const group: {
+  name?: string;
+  description?: string;
+  form?: FormDataType[];
+}[] = [
   {
     name: "Profile Visibility",
     description:
@@ -23,12 +23,9 @@ const privacyFormGroups: PrivacyFormGroup[] = [
         id: "profileVisibility",
         type: "radio",
         data: [
-          { value: "public" as PrivacyVisibilityOption, label: "Public" },
-          {
-            value: "connected" as PrivacyVisibilityOption,
-            label: "Only Connected",
-          },
-          { value: "private" as PrivacyVisibilityOption, label: "Private" },
+          { value: "public", label: "Public" },
+          { value: "connected", label: "Only Connected" },
+          { value: "private", label: "Private" },
         ],
       },
     ],
@@ -41,12 +38,9 @@ const privacyFormGroups: PrivacyFormGroup[] = [
         id: "contactInfoVisibility",
         type: "radio",
         data: [
-          { value: "public" as PrivacyVisibilityOption, label: "Public" },
-          {
-            value: "connected" as PrivacyVisibilityOption,
-            label: "Only Connected",
-          },
-          { value: "private" as PrivacyVisibilityOption, label: "Private" },
+          { value: "public", label: "Public" },
+          { value: "connected", label: "Only Connected" },
+          { value: "private", label: "Private" },
         ],
       },
     ],
@@ -58,17 +52,15 @@ type PrivacyFormProps = {
 };
 
 export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
-  const form = useForm<PrivacyFormValues>({
+  const form = useForm({
     defaultValues: {
-      profileVisibility:
-        initialSettings.profileVisibility as PrivacyVisibilityOption,
-      contactInfoVisibility:
-        initialSettings.contactInfoVisibility as PrivacyVisibilityOption,
+      profileVisibility: initialSettings.profileVisibility,
+      contactInfoVisibility: initialSettings.contactInfoVisibility,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: (data: PrivacyFormValues) => updateSettings(data),
+    mutationFn: updateSettings,
     onSuccess: () => {
       toast("Settings updated successfully", {
         icon: "✅",
@@ -83,7 +75,7 @@ export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
     },
   });
 
-  const onSubmit = (data: PrivacyFormValues) => {
+  const onSubmit = (data: any) => {
     if (config.ENV === "development") {
       toast("Form Submitted", {
         description: <pre>{JSON.stringify(data, null, 2)}</pre>,
@@ -93,15 +85,10 @@ export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
     mutation.mutate(data);
   };
 
-  if (mutation.isPending) {
-    // TODO: better loading ui
-    return <div>Loading...</div>;
-  }
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        {privacyFormGroups.map((group) => (
+        {group.map((group) => (
           <div key={group.name} className="border-b p-6">
             <h2 className="mb-3 font-bold">{group.name}</h2>
             <p className="mb-6 text-sm text-muted-foreground">
@@ -116,6 +103,7 @@ export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
                 data={field.data || []}
                 label={field.label}
                 placeholder={field.placeholder}
+                disabled={mutation.isPending}
               />
             ))}
           </div>

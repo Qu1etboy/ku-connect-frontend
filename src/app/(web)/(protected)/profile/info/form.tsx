@@ -1,7 +1,7 @@
 "use client";
 
 import InputField from "@/components/form/input";
-import MainLayout from "@/components/layout/main";
+import { LoadingScreen } from "@/components/loading";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +14,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { config } from "@/config";
 import { contactForm, nisitInfoForm, personalInfoForm } from "@/data/form";
-import { User, useUser } from "@/hooks/user";
+import { User } from "@/hooks/user";
 import { updateProfile } from "@/services/profile";
 import { upload } from "@/utils/storage";
 import { getProfileImageUrl } from "@/utils/url";
@@ -96,7 +96,7 @@ export default function ProfileInfomationForm({
   };
 
   if (mutation.isPending) {
-    return <div>Loading...</div>;
+    return <LoadingScreen />;
   }
 
   return (
