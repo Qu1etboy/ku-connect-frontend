@@ -52,6 +52,7 @@ export default function ProfilePage() {
             <AvatarImage
               src={getProfileImageUrl(profile.data?.image ?? "")}
               alt={profile.data?.displayName ?? ""}
+              className="object-cover"
             />
             <AvatarFallback>{profile.data?.displayName[0]}</AvatarFallback>
           </Avatar>
