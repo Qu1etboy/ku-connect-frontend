@@ -28,8 +28,22 @@ export default function ProfileCard({
     return info;
   };
 
+  const isBioLong = () => {
+    if (profile.bio && profile.bio.length > 100) {
+      return true;
+    }
+    return false;
+  };
+
+  const renderBio = () => {
+    if (isBioLong()) {
+      return profile.bio?.slice(0, 100) + "...";
+    }
+    return profile.bio;
+  };
+
   return (
-    <div className="h-full w-full snap-center snap-always">
+    <div className="relative h-full w-full snap-center snap-always">
       <div className="h-[55%]">
         <img
           src={profile.image ?? ""}
@@ -37,12 +51,17 @@ export default function ProfileCard({
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
         />
       </div>
-      <section className="relative px-4">
+      <section className="relative flex h-[45%] flex-col justify-between px-4">
         <div className="absolute left-0 right-0 top-[-40px] h-[50px] w-full bg-gradient-to-t from-white from-10% via-white/50 via-50% to-transparent to-100% backdrop-blur-sm"></div>
         <div className="relative top-[-10px] z-10">
           <h1 className="text-xl font-bold">{profile.displayName}</h1>
           <p className="text-sm text-gray-500">{renderNisitInfo()}</p>
-          <p className="mt-2">{profile.bio}</p>
+          <p className="mt-2">{renderBio()}</p>
+          {isBioLong() && (
+            <Button variant="link" className="px-0 text-sm text-green-500">
+              Read more
+            </Button>
+          )}
           <div className="my-4 flex flex-wrap gap-2">
             {profile.interests.map((interest) => (
               <Badge key={interest.id} variant="outline">
@@ -51,7 +70,7 @@ export default function ProfileCard({
             ))}
           </div>
         </div>
-        <div className="my-16 flex justify-between px-8">
+        <div className="flex justify-between px-8 pb-8">
           <Button
             variant="outline"
             className="h-[100px] w-[100px] rounded-full shadow-lg"
