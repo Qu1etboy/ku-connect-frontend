@@ -27,10 +27,12 @@ export type Profile = {
     updatedTime: string;
   };
   similarity: number;
-  interests: {
-    id: string;
-    name: string;
-  }[];
+  interests: Interest[];
+};
+
+export type Interest = {
+  id: string;
+  name: string;
 };
 
 export const createProfile = async (profile: ProfileForm) => {
@@ -87,25 +89,32 @@ export const updateProfile = async (profile: ProfileForm) => {
 
 export const getMyInterests = async () => {
   const headers = await getHeaders();
-  const response = await instance.get(`/api/profiles/me/interests`, {
-    headers,
-  });
+  const response = await instance.get<{ interests: Interest[] }>(
+    `/api/profiles/me/interests`,
+    {
+      headers,
+    },
+  );
 
   return response.data.interests;
 };
 
 export const updateMyInterests = async (interests: string[]) => {
   const headers = await getHeaders();
-  const response = await instance.put(`/api/profiles/me/interests`, interests, {
-    headers,
-  });
+  const response = await instance.put<{ interests: Interest[] }>(
+    `/api/profiles/me/interests`,
+    interests,
+    {
+      headers,
+    },
+  );
 
   return response.data;
 };
 
 export const getKUConnectInterests = async () => {
   const headers = await getHeaders();
-  const response = await instance.get(`/api/interests`, {
+  const response = await instance.get<Interest[]>(`/api/interests`, {
     headers,
   });
 

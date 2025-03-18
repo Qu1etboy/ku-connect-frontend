@@ -2,14 +2,10 @@
 
 import MainLayout from "@/components/layout/main";
 import PrivacyForm from "./form";
-import { getSettings } from "@/services/settings";
-import { useQuery } from "@tanstack/react-query";
+import { useSettings } from "@/hooks/settings";
 
 export default function PrivacyPage() {
-  const settings = useQuery({
-    queryKey: ["settings"],
-    queryFn: () => getSettings(),
-  });
+  const settings = useSettings();
 
   return (
     <MainLayout

@@ -14,11 +14,10 @@ import {
 import { Form } from "@/components/ui/form";
 import { config } from "@/config";
 import { contactForm, nisitInfoForm, personalInfoForm } from "@/data/form";
+import { useUpdateMyProfile } from "@/hooks/profile";
 import { User } from "@/hooks/user";
-import { updateProfile } from "@/services/profile";
 import { upload } from "@/utils/storage";
 import { getProfileImageUrl } from "@/utils/url";
-import { useMutation } from "@tanstack/react-query";
 import { CameraIcon, ChevronRightIcon } from "lucide-react";
 import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -45,26 +44,8 @@ export default function ProfileInfomationForm({
   const form = useForm({
     defaultValues,
   });
-
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const mutation = useMutation({
-    mutationFn: (profile: any) => {
-      return updateProfile(profile);
-    },
-    onSuccess: () => {
-      toast("Profile updated successfully", {
-        position: "top-center",
-        icon: "✅",
-      });
-    },
-    onError: () => {
-      toast("Failed to update profile", {
-        position: "top-center",
-        icon: "❌",
-      });
-    },
-  });
+  const mutation = useUpdateMyProfile();
 
   const onSubmit = (data: any) => {
     if (config.ENV === "development") {

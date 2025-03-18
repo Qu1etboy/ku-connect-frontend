@@ -1,28 +1,21 @@
 "use client";
 
 import MainLayout from "@/components/layout/main";
-import { getKUConnectInterests, getMyInterests } from "@/services/profile";
-import { useQuery } from "@tanstack/react-query";
 import InterestsForm from "./form";
+import { useKuConnectInterests, useMyInterests } from "@/hooks/profile";
 
 export default function InterestsPage() {
   const {
     data: systemInterests,
     isError: isSystemInterestsError,
     isLoading: isSystemInterestsLoading,
-  } = useQuery({
-    queryKey: ["systemInterests"],
-    queryFn: () => getKUConnectInterests(),
-  });
+  } = useKuConnectInterests();
 
   const {
     data: myInterests,
     isError: isMyInterestsError,
     isLoading: isMyInterestsLoading,
-  } = useQuery({
-    queryKey: ["myInterests"],
-    queryFn: () => getMyInterests(),
-  });
+  } = useMyInterests();
 
   if (isSystemInterestsError || isMyInterestsError) return <div>Error</div>;
 
@@ -36,8 +29,8 @@ export default function InterestsPage() {
         What are you interested in?
       </h2>
       <InterestsForm
-        systemInterests={systemInterests}
-        myInterests={myInterests}
+        systemInterests={systemInterests!}
+        myInterests={myInterests!}
       />
     </MainLayout>
   );

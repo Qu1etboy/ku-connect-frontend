@@ -3,13 +3,11 @@
 import InputField from "@/components/form/input";
 import { FormDataType } from "@/components/form/type";
 import { Form } from "@/components/ui/form";
-import React from "react";
 import { useForm } from "react-hook-form";
-import { updateSettings, type Settings } from "@/services/settings";
+import { type Settings } from "@/services/settings";
 import { config } from "@/config";
 import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
-import { LoadingScreen } from "@/components/loading";
+import { useUpdateSettings } from "@/hooks/settings";
 
 const group: {
   name?: string;
@@ -53,23 +51,7 @@ export default function PreferencesForm({
     },
   });
 
-  const mutation = useMutation({
-    mutationFn: (settings: Settings) => {
-      return updateSettings(settings);
-    },
-    onSuccess: () => {
-      toast("Settings updated successfully", {
-        icon: "✅",
-        position: "top-center",
-      });
-    },
-    onError: () => {
-      toast("Failed to update settings", {
-        icon: "❌",
-        position: "top-center",
-      });
-    },
-  });
+  const mutation = useUpdateSettings();
 
   const onSubmit = (data: any) => {
     if (config.ENV === "development") {

@@ -1,11 +1,10 @@
 import InputField from "@/components/form/input";
 import { FormDataType } from "@/components/form/type";
-import { LoadingScreen } from "@/components/loading";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { config } from "@/config";
-import { Settings, updateSettings } from "@/services/settings";
-import { useMutation } from "@tanstack/react-query";
+import { useUpdateSettings } from "@/hooks/settings";
+import { Settings } from "@/services/settings";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -59,21 +58,7 @@ export default function PrivacyForm({ initialSettings }: PrivacyFormProps) {
     },
   });
 
-  const mutation = useMutation({
-    mutationFn: updateSettings,
-    onSuccess: () => {
-      toast("Settings updated successfully", {
-        icon: "✅",
-        position: "top-center",
-      });
-    },
-    onError: () => {
-      toast("Failed to update settings", {
-        icon: "❌",
-        position: "top-center",
-      });
-    },
-  });
+  const mutation = useUpdateSettings();
 
   const onSubmit = (data: any) => {
     if (config.ENV === "development") {

@@ -2,10 +2,9 @@
 
 import MainLayout from "@/components/layout/main";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useMyProfile } from "@/hooks/profile";
 import { useUser } from "@/hooks/user";
-import { getMyProfile } from "@/services/profile";
 import { getProfileImageUrl } from "@/utils/url";
-import { useQuery } from "@tanstack/react-query";
 import {
   ChevronRight,
   LogOut,
@@ -39,10 +38,7 @@ const sections = [
 
 export default function ProfilePage() {
   const { user, logout, isLoading } = useUser();
-  const profile = useQuery({
-    queryKey: ["profile", user?.id],
-    queryFn: () => getMyProfile(),
-  });
+  const profile = useMyProfile();
 
   return (
     <MainLayout title="Profile" isLoading={isLoading || profile.isLoading}>

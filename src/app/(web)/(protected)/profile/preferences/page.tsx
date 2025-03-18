@@ -3,16 +3,12 @@
 import MainLayout from "@/components/layout/main";
 import React from "react";
 import PrivacySettingsForm from "./form";
-import { getSettings } from "@/services/settings";
-import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useSettings } from "@/hooks/settings";
 
 export default function PreferencesPage() {
-  const settings = useQuery({
-    queryKey: ["settings"],
-    queryFn: () => getSettings(),
-  });
+  const settings = useSettings();
 
   return (
     <MainLayout

@@ -4,10 +4,8 @@ import { interestsForm, SystemInterest } from "@/data/form";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { updateMyInterests } from "@/services/profile";
-import { useMutation } from "@tanstack/react-query";
 import { config } from "@/config";
-import { LoadingScreen } from "@/components/loading";
+import { useUpdateMyInterests } from "@/hooks/profile";
 
 type InterestsFormProps = {
   systemInterests: SystemInterest[];
@@ -24,22 +22,7 @@ export default function InterestsForm({
     },
   });
   const fields = interestsForm(systemInterests);
-
-  const mutation = useMutation({
-    mutationFn: updateMyInterests,
-    onSuccess: () => {
-      toast("Interests updated successfully", {
-        position: "top-center",
-        icon: "✅",
-      });
-    },
-    onError: () => {
-      toast("Error updating interests", {
-        position: "top-center",
-        icon: "❌",
-      });
-    },
-  });
+  const mutation = useUpdateMyInterests();
 
   const onSubmit = (data: any) => {
     if (config.ENV === "development") {
@@ -57,6 +40,7 @@ export default function InterestsForm({
         <div className="max-h-[45vh] overflow-auto">
           {fields.map((field) => (
             <InputField
+              key={field.id}
               control={form.control}
               type={field.type}
               name={field.id}
