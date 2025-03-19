@@ -31,10 +31,11 @@ export default function ChatPage() {
     },
   });
 
-  // TODO
   let prevMinute = "";
+  let prevDate = "";
 
   const [loadingHistory, setLoadingHistory] = useState(false);
+  // const [isScrolling, setIsScrolling] = useState(false);
 
   const isFirstLoad = useRef(true);
 
@@ -43,6 +44,11 @@ export default function ChatPage() {
 
   const handleScroll = () => {
     if (chatContainerRef.current) {
+      // setIsScrolling(true);
+      // setTimeout(() => {
+      //   setIsScrolling(false);
+      // }
+      // , 1000);
       if (chatContainerRef.current.scrollTop === 0 && !loadingHistory) {
         setLoadingHistory(true);
 
@@ -76,7 +82,11 @@ export default function ChatPage() {
 
     // Socket events
     const handleReceiveMessage = (newMessage: ChatMessage) => {
-      console.log(user?.name, user?.userId === newMessage.authorId ? "Sent" : "Received", newMessage.content);
+      console.log(
+        user?.name,
+        user?.userId === newMessage.authorId ? "Sent" : "Received",
+        newMessage.content,
+      );
       setMessages((prev) => [...prev, newMessage]);
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
@@ -139,45 +149,63 @@ export default function ChatPage() {
           </div>
         )}
         {messages.map((message) => {
+          const displayDate = prevDate !== message.createdTime.slice(0, 10);
+          prevDate = message.createdTime.slice(0, 10);
           if (message.authorId === user?.userId) {
             return (
-              <div key={message.id} className="flex justify-end space-x-2">
-                <div className="flex flex-col self-end">
-                  {message.isRead && (
-                    <p className="text-xs text-gray-500">Read</p>
-                  )}
-                  <p className="text-xs text-gray-500">
-                    {message.createdTime.slice(11, 16)}
-                  </p>
+              <>
+                <DateDivider
+                  date={message.createdTime.slice(0, 10)}
+                  visible={displayDate}
+                  // sticky={isScrolling && displayDate}
+                />
+                <div key={message.id} className="flex justify-end space-x-2">
+                  <div className="flex flex-col self-end">
+                    {message.isRead && (
+                      <p className="text-xs text-gray-500">Read</p>
+                    )}
+                    <p className="text-xs text-gray-500">
+                      {message.createdTime.slice(11, 16)}
+                    </p>
+                  </div>
+                  <div className="mt-2 rounded-xl rounded-tr-none bg-green-500 p-2">
+                    <p className="whitespace-pre-wrap text-sm">
+                      {message.content}
+                    </p>
+                  </div>
                 </div>
-                <div className="mt-1 rounded-xl rounded-tr-none bg-green-500 p-2">
-                  <p className="whitespace-pre-wrap text-sm">
-                    {message.content}
-                  </p>
-                </div>
-              </div>
+              </>
             );
           }
           const messageMinute = message.createdTime.slice(14, 16);
           const displayAvatar = prevMinute !== messageMinute;
           prevMinute = messageMinute;
           return (
-            <div key={message.id} className="flex space-x-2">
-              {displayAvatar ? (
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={chatData?.avatar} />
-                  <AvatarFallback>{chatData?.name[0]}</AvatarFallback>
-                </Avatar>
-              ) : (
-                <div className="min-w-8" />
-              )}
-              <div className="mt-1 rounded-xl rounded-tl-none bg-gray-100 p-2">
-                <p className="whitespace-pre-wrap text-sm">{message.content}</p>
+            <>
+              <DateDivider
+                date={message.createdTime.slice(0, 10)}
+                visible={displayDate}
+                // sticky={isScrolling && displayDate}
+              />
+              <div key={message.id} className="flex space-x-2">
+                {displayAvatar ? (
+                  <Avatar className="h-8 w-8 mt-2">
+                    <AvatarImage src={chatData?.avatar} />
+                    <AvatarFallback>{chatData?.name[0]}</AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <div className="min-w-8" />
+                )}
+                <div className="mt-2 rounded-xl rounded-tl-none bg-gray-100 p-2">
+                  <p className="whitespace-pre-wrap text-sm">
+                    {message.content}
+                  </p>
+                </div>
+                <p className="self-end text-xs text-gray-500">
+                  {message.createdTime.slice(11, 16)}
+                </p>
               </div>
-              <p className="self-end text-xs text-gray-500">
-                {message.createdTime.slice(11, 16)}
-              </p>
-            </div>
+            </>
           );
         })}
         <div ref={messagesEndRef} />
@@ -186,12 +214,25 @@ export default function ChatPage() {
   );
 }
 
-// TODO: Add date divider
+// TODO: Hide date divider when scrolling
 
-{
-  /* <div className="sticky top-0 z-10 flex justify-center py-2">
-                <p className="rounded-xl bg-gray-100 px-2 py-1 text-center text-xs text-gray-500 opacity-50">
-                  {date}
-                </p>
-              </div> */
-}
+const DateDivider = ({
+  date,
+  visible,
+  sticky = false,
+}: {
+  date: string;
+  visible: boolean;
+  sticky?: boolean;
+}) => {
+  if (!visible) return null;
+  return (
+    <div
+      className={`top-0 z-10 flex justify-center py-2 ${sticky ? "sticky" : ""}`}
+    >
+      <p className="rounded-xl bg-gray-100 px-2 py-1 text-center text-xs text-gray-500 opacity-50">
+        {date}
+      </p>
+    </div>
+  );
+};

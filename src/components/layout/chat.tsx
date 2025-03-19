@@ -69,11 +69,18 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
   return (
     <div className="flex space-x-4 border-t border-gray-100 p-4 shadow-sm">
       <Textarea
+        maxLength={150}
         className="min-h-9 resize-none"
         rows={1}
         value={message}
         onChange={handleChange}
         placeholder="Type a message ..."
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+          }
+        }}
       />
       <Button onClick={handleSend}>
         <Navigation2 className="rotate-90" />
