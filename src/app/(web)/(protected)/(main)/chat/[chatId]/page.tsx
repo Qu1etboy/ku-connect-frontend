@@ -90,6 +90,7 @@ export default function ChatPage() {
       setMessages((prev) => [...prev, newMessage]);
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
+
     const handleReadMessage = (messageId: string) => {
       console.log("handleReadMessage", messageId);
       setMessages((prev) =>
@@ -101,9 +102,12 @@ export default function ChatPage() {
       );
     };
     GetChatData();
-    socket.connect();
-    socket.emit("join_chat", chatId);
 
+    // Socket connection
+    if (!socket.connected) {
+      socket.connect();
+    }
+    socket.emit("join_chat", chatId);
     socket.on("receive_message", handleReceiveMessage);
     socket.on("read_message", handleReadMessage);
 
@@ -113,7 +117,7 @@ export default function ChatPage() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       socket.disconnect();
     };
-  }, [GetChatData, chatId]);
+  }, [GetChatData, chatId, user?.name, user?.userId]);
 
   useEffect(() => {
     if (isFirstLoad.current && messages.length > 0) {
@@ -131,6 +135,7 @@ export default function ChatPage() {
     }
   }, [chatId, isWindowFocused, user?.userId, messages]);
 
+  // TODO: add scroll to bottom button
   return (
     <ChatLayout
       title={chatData?.name || ""}
@@ -189,7 +194,7 @@ export default function ChatPage() {
               />
               <div key={message.id} className="flex space-x-2">
                 {displayAvatar ? (
-                  <Avatar className="h-8 w-8 mt-2">
+                  <Avatar className="mt-2 h-8 w-8">
                     <AvatarImage src={chatData?.avatar} />
                     <AvatarFallback>{chatData?.name[0]}</AvatarFallback>
                   </Avatar>
