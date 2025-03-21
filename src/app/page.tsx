@@ -1,6 +1,7 @@
 "use client";
 
-import AuthProtected from "@/components/auth";
+import AuthProtected from "@/components/guard/auth";
+import ProfileProtected from "@/components/guard/profile";
 import Menu from "@/components/menu";
 import ProfileSwiper from "@/components/profile-swiper";
 import { listProfiles } from "@/services/profile";
@@ -51,16 +52,18 @@ export default function Home() {
 
   return (
     <AuthProtected>
-      <main className="flex h-dvh flex-col">
-        <ProfileSwiper
-          profiles={data?.pages.flatMap((page) => page.profiles) || []}
-        >
-          <p ref={ref}></p>
-          {isPending ||
-            (isFetchingNextPage && <p className="text-center">Loading...</p>)}
-        </ProfileSwiper>
-        <Menu />
-      </main>
+      <ProfileProtected>
+        <main className="flex h-dvh flex-col">
+          <ProfileSwiper
+            profiles={data?.pages.flatMap((page) => page.profiles) || []}
+          >
+            <p ref={ref}></p>
+            {isPending ||
+              (isFetchingNextPage && <p className="text-center">Loading...</p>)}
+          </ProfileSwiper>
+          <Menu />
+        </main>
+      </ProfileProtected>
     </AuthProtected>
   );
 }

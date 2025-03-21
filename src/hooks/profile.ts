@@ -1,4 +1,5 @@
 import {
+  createProfile,
   getKUConnectInterests,
   getMyInterests,
   getMyProfile,
@@ -16,6 +17,28 @@ export function useMyProfile() {
   return useQuery({
     queryKey: myProfileQueryKey,
     queryFn: getMyProfile,
+  });
+}
+
+export function useCreateProfile({
+  onSuccess,
+  onError,
+}: {
+  onSuccess: () => void;
+  onError: () => void;
+}) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createProfile,
+    onSuccess: (data) => {
+      console.log("profile created successfully", data);
+      queryClient.refetchQueries({ queryKey: myProfileQueryKey });
+      onSuccess();
+    },
+    onError: () => {
+      onError();
+    },
   });
 }
 

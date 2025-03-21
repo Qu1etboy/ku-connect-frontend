@@ -1,13 +1,14 @@
 import AuthProtected from "@/components/guard/auth";
+import ProfileProtected from "@/components/guard/profile";
 import React from "react";
 
 /**
  * Protected pages, required user to login first to visit.
  */
-export default function ProtectedLayout({
+export default function RequiredProfileLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AuthProtected>{children}</AuthProtected>;
+  return <ProfileProtected>{children}</ProfileProtected>;
 }
