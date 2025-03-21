@@ -2,20 +2,29 @@
 
 import MainLayout from "@/components/layout/main";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import React, { useEffect } from "react";
-import { Mail } from "lucide-react";
 import { formatShortDistanceToNow } from "@/utils/date";
-import { io } from "socket.io-client";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchMyNotification } from "@/services/notification";
+import DOMPurify from "dompurify";
+import {
+  InfiniteData,
+  useInfiniteQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import {
+  fetchMyNotification,
+  readNotifications,
+} from "@/services/notification";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { config } from "@/config";
+import socket from "@/utils/socket";
+import {
+  NotificationIcon,
+  NotificationType,
+} from "@/components/notification-icon";
 
 type Notification = {
-  id: number;
+  id: string;
   userId: string;
-  type: string;
+  type: NotificationType;
   data: {
     title: string;
     message: string;
@@ -28,6 +37,7 @@ type Notification = {
 const PAGE_SIZE = 15;
 
 export default function AlertPage() {
+  const queryClient = useQueryClient();
   const { data, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ["notifications"],
@@ -47,11 +57,35 @@ export default function AlertPage() {
       },
     });
 
+  const readNotification = async (id: string) => {
+    await readNotifications([id]);
+    console.log("read notification", id);
+
+    queryClient.setQueryData(
+      ["notifications"],
+      (old: InfiniteData<Notification[]>) => {
+        console.log(old.pages);
+        return {
+          pages: [
+            old.pages[0].map((noti) =>
+              noti.id === id ? { ...noti, readAt: new Date() } : noti,
+            ),
+          ],
+          pageParams: old.pageParams,
+        };
+      },
+    );
+
+    // todo: if it noti type chat, redirect user to a chat page
+  };
+
   useEffect(() => {
-    const socket = io(config.BACKEND_URL);
+    socket.connect();
     socket.on("notification", (newNotification: Notification) => {
       console.log("Receive new notification", newNotification);
-      // setNotifications((prev) => [newNotification, ...prev]);
+      queryClient.refetchQueries({
+        queryKey: ["notifications"],
+      });
     });
 
     return () => {
@@ -61,43 +95,48 @@ export default function AlertPage() {
 
   return (
     <MainLayout title="Alerts" isLoading={isPending}>
-      {data && data.pages.length > 0 ? (
-        <InfiniteScroll
-          dataLength={data.pages.flat().length}
-          next={() => {
-            console.log("fetching next page");
-            if (hasNextPage && !isFetchingNextPage) {
-              fetchNextPage();
-            }
-          }}
-          hasMore={hasNextPage}
-          loader={null}
-        >
-          {data.pages.flat().map((noti: Notification) => (
-            <Link
-              key={noti.id}
-              href=""
-              className={cn(
-                "flex border-b p-4 duration-200 hover:bg-green-100",
-                noti.readAt ? "bg-white" : "bg-green-50",
-              )}
-            >
-              {/* TODO: Icon should be display from `noti.icon` but for now just mock as a Mail */}
-              <Mail className="my-auto mr-2 w-12" />
-              <section className="space-y-2">
-                <h2 className="text-sm font-bold md:text-base">
-                  {noti.data.title}
-                </h2>
-                <p className="max-w-[35ch] text-xs text-muted-foreground md:text-sm">
-                  {noti.data.message}
-                </p>
-              </section>
-              <time className="ml-auto pl-2 text-xs text-muted-foreground md:text-sm">
-                {formatShortDistanceToNow(new Date(noti.createdTime))}
-              </time>
-            </Link>
-          ))}
-        </InfiniteScroll>
+      {data && data.pages.flat().length > 0 ? (
+        <>
+          <InfiniteScroll
+            dataLength={data.pages.flat().length}
+            next={() => {
+              console.log("fetching next page");
+              if (hasNextPage && !isFetchingNextPage) {
+                fetchNextPage();
+              }
+            }}
+            hasMore={hasNextPage}
+            loader={null}
+          >
+            {data.pages.flat().map((noti: Notification) => (
+              <button
+                key={noti.id}
+                onClick={() => readNotification(noti.id)}
+                className={cn(
+                  "flex w-full border-b p-4 text-left duration-200 hover:bg-green-100",
+                  noti.readAt ? "bg-white" : "bg-green-50",
+                )}
+              >
+                {/* TODO: Icon should be display from `noti.type` but for now just mock as a Mail */}
+                <NotificationIcon type={noti.type} />
+                <section className="ml-2 space-y-2">
+                  <h2 className="text-sm font-bold md:text-base">
+                    {noti.data.title}
+                  </h2>
+                  <p
+                    className="max-w-[35ch] text-xs text-muted-foreground md:text-sm"
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(noti.data.message),
+                    }}
+                  />
+                </section>
+                <time className="ml-auto pl-2 text-xs text-muted-foreground md:text-sm">
+                  {formatShortDistanceToNow(new Date(noti.createdTime))}
+                </time>
+              </button>
+            ))}
+          </InfiniteScroll>
+        </>
       ) : (
         <div className="mt-24 text-center">You have no new notification.</div>
       )}
