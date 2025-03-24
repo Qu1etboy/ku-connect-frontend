@@ -116,7 +116,10 @@ export default function ProfileCard({
           <Button
             variant="outline"
             className="h-[100px] w-[100px] rounded-full shadow-lg hover:bg-green-100"
-            onClick={onLiked}
+            onClick={() => {
+              onLiked();
+              onIconClick(true);
+            }}
           >
             <span className="sr-only">Like</span>
             <HeartHandshake className="scale-[2.5] text-green-500" />
@@ -128,7 +131,11 @@ export default function ProfileCard({
           <motion.div
             key={icon.id}
             initial={{ y: icon.y, x: icon.x, opacity: 1, scale: 0.8 }}
-            animate={{ y: icon.y - 150, opacity: 0, scale: Math.random() + 0.5 }}
+            animate={{
+              y: icon.y - 150,
+              opacity: 0,
+              scale: Math.random() + 0.5,
+            }}
             exit={{ opacity: 0 }}
             transition={{ duration: 2, ease: "easeOut" }}
             className="absolute left-1/2 top-1/3"

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useMyProfile } from "@/hooks/profile";
 import { Profile } from "@/services/profile";
 import { ChevronLeft } from "lucide-react";
-import Pride from "react-canvas-confetti/dist/presets/Pride";
+import Pride from "react-canvas-confetti/dist/presets/pride";
 import { TDecorateOptionsFn } from "react-canvas-confetti/dist/types";
 import ConnectionCard from "./connection-card";
 interface ProfileConnectedPageProps {
