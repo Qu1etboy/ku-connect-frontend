@@ -1,6 +1,5 @@
 import { toast } from "sonner";
-import ProfileCard from "./profile";
-import Profile from "./profile";
+import { default as Profile, default as ProfileCard } from "./profile";
 
 type Profile = {
   id: string;
@@ -34,21 +33,26 @@ type Profile = {
 
 type ProfileSwiperProps = {
   profiles: Profile[];
+  setConnectedProfile: (profile: Profile) => void;
   children: React.ReactNode;
 };
 
 export default function ProfileSwiper({
   profiles,
+  setConnectedProfile,
   children,
 }: ProfileSwiperProps) {
-  const onLiked = (id: string) => {
+  const onLiked = (id: string, profile: Profile) => {
     // TODO: Send like request to backend
-    toast.success("You liked " + id, {
-      position: "top-center",
-    });
+    // toast.success("You liked " + id, {
+    //   position: "bottom-center",
+    // });
     console.log("Liked", id);
 
     // TODO: Add animation
+
+    // match
+    setConnectedProfile(profile);
   };
 
   const onDisliked = (id: string) => {
@@ -63,11 +67,11 @@ export default function ProfileSwiper({
 
   return (
     <div className="no-scrollbar flex-1 snap-y snap-mandatory overflow-scroll">
-      {profiles.map((profile, index) => (
+      {profiles.map((profile) => (
         <ProfileCard
           key={profile.id}
           profile={profile}
-          onLiked={() => onLiked(profile.id)}
+          onLiked={() => onLiked(profile.id, profile)}
           onDisliked={() => onDisliked(profile.id)}
         />
       ))}

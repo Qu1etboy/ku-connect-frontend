@@ -1,4 +1,5 @@
 import { getProfileImageUrl } from "@/utils/url";
+import { HeartHandshake } from "lucide-react";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
@@ -38,8 +39,9 @@ export default function ConnectionCard({
         alt="border"
         width={220}
         height={220}
-        className="absolute rotate-[12deg]"
+        className="animate-spin-slow absolute"
       />
+      <HeartHandshake className="absolute z-0 h-12 w-12 text-[#34A853]" />
     </div>
   );
 }

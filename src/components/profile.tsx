@@ -1,8 +1,8 @@
 import { Profile } from "@/services/profile";
+import { getProfileImageUrl } from "@/utils/url";
+import { HeartHandshake, HeartOff } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { HeartHandshake, HeartOff } from "lucide-react";
-import { getProfileImageUrl } from "@/utils/url";
 
 type ProfileCardProps = {
   profile: Profile;
@@ -78,7 +78,7 @@ export default function ProfileCard({
             onClick={onDisliked}
           >
             <span className="sr-only">Dislike</span>
-            <HeartOff className="h-14 w-14 text-red-500" />
+            <HeartOff className="scale-[2.5] text-red-500" />
           </Button>
           <Button
             variant="outline"
@@ -86,7 +86,7 @@ export default function ProfileCard({
             onClick={onLiked}
           >
             <span className="sr-only">Like</span>
-            <HeartHandshake className="h-14 w-14 text-green-500" />
+            <HeartHandshake className="scale-[2.5] text-green-500" />
           </Button>
         </div>
       </section>

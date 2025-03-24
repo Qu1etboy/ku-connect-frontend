@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { useMyProfile } from "@/hooks/profile";
 import { Profile } from "@/services/profile";
 import { ChevronLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import Pride from "react-canvas-confetti/dist/presets/Pride";
+import { TDecorateOptionsFn } from "react-canvas-confetti/dist/types";
 import ConnectionCard from "./connection-card";
-
 interface ProfileConnectedPageProps {
   connectedProfiles: Profile;
   onBack: () => void;
@@ -16,10 +16,26 @@ export default function ProfileConnectedPage({
   onBack,
 }: ProfileConnectedPageProps) {
   const { data: myProfile } = useMyProfile();
-  const router = useRouter();
+  // const router = useRouter();
+  const confettiDecorateOptions: TDecorateOptionsFn = (defaultOptions) => {
+    return {
+      ...defaultOptions,
+      colors: ["#EA4335", "#FBBC05", "#4285F4"],
+      particleCount: 40,
+      gravity: 0.8,
+      ticks: 400,
+      scalar: 1.5,
+      spread: 90,
+      // angle: 270,
+    };
+  };
 
   return (
     <div className="flex h-screen flex-col">
+      <Pride
+        autorun={{ speed: 0.3 }}
+        decorateOptions={confettiDecorateOptions}
+      />
       <header className="pt-safe sticky top-0 z-20">
         <div className="header-safe grid grid-cols-12 place-content-center text-center">
           <div role="button" onClick={onBack} className="pl-4 pt-0.5">

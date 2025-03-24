@@ -1,10 +1,11 @@
 "use client";
 
 import Menu from "@/components/menu";
+import ProfileConnectedPage from "@/components/profile-connected";
 import ProfileSwiper from "@/components/profile-swiper";
-import { listProfiles } from "@/services/profile";
+import { listProfiles, Profile } from "@/services/profile";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 const PAGE_SIZE = 3;
@@ -48,16 +49,27 @@ export default function Home() {
     }
   }, [inView]);
 
+  const [connectedProfile, setConnectedProfile] = useState<Profile>();
+
   return (
     <main className="flex h-dvh flex-col">
       <ProfileSwiper
         profiles={data?.pages.flatMap((page) => page.profiles) || []}
+        setConnectedProfile={setConnectedProfile}
       >
         <p ref={ref}></p>
         {isPending ||
           (isFetchingNextPage && <p className="text-center">Loading...</p>)}
       </ProfileSwiper>
-      <Menu />
+      {!connectedProfile && <Menu />}
+      {connectedProfile && (
+        <ProfileConnectedPage
+          connectedProfiles={connectedProfile}
+          onBack={() => {
+            setConnectedProfile(undefined);
+          }}
+        />
+      )}
     </main>
   );
 }
