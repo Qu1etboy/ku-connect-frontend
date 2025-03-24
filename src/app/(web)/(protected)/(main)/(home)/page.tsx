@@ -1,12 +1,10 @@
 "use client";
 
-import AuthProtected from "@/components/guard/auth";
-import ProfileProtected from "@/components/guard/profile";
 import Menu from "@/components/menu";
 import ProfileSwiper from "@/components/profile-swiper";
 import { listProfiles } from "@/services/profile";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 const PAGE_SIZE = 3;
@@ -51,19 +49,15 @@ export default function Home() {
   }, [inView]);
 
   return (
-    <AuthProtected>
-      <ProfileProtected>
-        <main className="flex h-dvh flex-col">
-          <ProfileSwiper
-            profiles={data?.pages.flatMap((page) => page.profiles) || []}
-          >
-            <p ref={ref}></p>
-            {isPending ||
-              (isFetchingNextPage && <p className="text-center">Loading...</p>)}
-          </ProfileSwiper>
-          <Menu />
-        </main>
-      </ProfileProtected>
-    </AuthProtected>
+    <main className="flex h-dvh flex-col">
+      <ProfileSwiper
+        profiles={data?.pages.flatMap((page) => page.profiles) || []}
+      >
+        <p ref={ref}></p>
+        {isPending ||
+          (isFetchingNextPage && <p className="text-center">Loading...</p>)}
+      </ProfileSwiper>
+      <Menu />
+    </main>
   );
 }

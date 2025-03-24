@@ -1,25 +1,25 @@
 "use client";
 
 import MainLayout from "@/components/layout/main";
+import {
+  NotificationIcon,
+  NotificationType,
+} from "@/components/notification-icon";
 import { cn } from "@/lib/utils";
-import React, { useEffect } from "react";
+import {
+  fetchMyNotification,
+  readNotifications,
+} from "@/services/notification";
 import { formatShortDistanceToNow } from "@/utils/date";
-import DOMPurify from "dompurify";
+import socket from "@/utils/socket";
 import {
   InfiniteData,
   useInfiniteQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import {
-  fetchMyNotification,
-  readNotifications,
-} from "@/services/notification";
+import DOMPurify from "dompurify";
+import { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import socket from "@/utils/socket";
-import {
-  NotificationIcon,
-  NotificationType,
-} from "@/components/notification-icon";
 
 type Notification = {
   id: string;
@@ -80,7 +80,9 @@ export default function AlertPage() {
   };
 
   useEffect(() => {
-    socket.connect();
+    if (!socket.connected) {
+      socket.connect();
+    }
     socket.on("notification", (newNotification: Notification) => {
       console.log("Receive new notification", newNotification);
       queryClient.refetchQueries({

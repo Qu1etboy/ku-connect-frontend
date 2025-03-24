@@ -1,4 +1,3 @@
-import AuthProtected from "@/components/guard/auth";
 import ProfileProtected from "@/components/guard/profile";
 import React from "react";
 
