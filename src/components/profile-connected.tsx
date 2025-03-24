@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useMyProfile } from "@/hooks/profile";
 import { Profile } from "@/services/profile";
 import { ChevronLeft } from "lucide-react";
+import { useEffect, useState } from "react";
 import Pride from "react-canvas-confetti/dist/presets/pride";
 import { TDecorateOptionsFn } from "react-canvas-confetti/dist/types";
 import ConnectionCard from "./connection-card";
@@ -30,12 +31,16 @@ export default function ProfileConnectedPage({
     };
   };
 
+  const [startConfetti, setStartConfetti] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStartConfetti(true);
+    }, 700);
+  }, []);
+
   return (
     <div className="flex h-screen flex-col">
-      <Pride
-        autorun={{ speed: 0.3 }}
-        decorateOptions={confettiDecorateOptions}
-      />
       <header className="pt-safe sticky top-0 z-20">
         <div className="header-safe grid grid-cols-12 place-content-center text-center">
           <div role="button" onClick={onBack} className="pl-4 pt-0.5">
@@ -43,7 +48,7 @@ export default function ProfileConnectedPage({
           </div>
         </div>
       </header>
-      <div className="flex flex-1 flex-col items-center justify-around">
+      <div className="flex flex-1 flex-col items-center justify-between pb-10 pt-5">
         <div className="flex flex-col items-center space-y-8">
           <h1 className="text-center text-3xl font-semibold">
             You’re Connected!
@@ -67,6 +72,12 @@ export default function ProfileConnectedPage({
           </Button>
         </div>
       </div>
+      {startConfetti && (
+        <Pride
+          autorun={{ speed: 0.3 }}
+          decorateOptions={confettiDecorateOptions}
+        />
+      )}
     </div>
   );
 }

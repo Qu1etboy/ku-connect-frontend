@@ -5,6 +5,7 @@ import ProfileConnectedPage from "@/components/profile-connected";
 import ProfileSwiper from "@/components/profile-swiper";
 import { listProfiles, Profile } from "@/services/profile";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -52,7 +53,7 @@ export default function Home() {
   const [connectedProfile, setConnectedProfile] = useState<Profile>();
 
   return (
-    <main className="flex h-dvh flex-col">
+    <main className="flex h-dvh flex-col transition-all duration-300">
       <ProfileSwiper
         profiles={data?.pages.flatMap((page) => page.profiles) || []}
         setConnectedProfile={setConnectedProfile}
@@ -63,12 +64,18 @@ export default function Home() {
       </ProfileSwiper>
       {!connectedProfile && <Menu />}
       {connectedProfile && (
-        <ProfileConnectedPage
-          connectedProfiles={connectedProfile}
-          onBack={() => {
-            setConnectedProfile(undefined);
-          }}
-        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <ProfileConnectedPage
+            connectedProfiles={connectedProfile}
+            onBack={() => {
+              setConnectedProfile(undefined);
+            }}
+          />
+        </motion.div>
       )}
     </main>
   );
