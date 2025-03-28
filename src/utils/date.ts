@@ -3,7 +3,9 @@ import { addHours, formatDistanceToNowStrict } from "date-fns";
 export function formatShortDistanceToNow(date: Date | string) {
   // Get the strict distance as a string
   const adjustedDate = addHours(new Date(date), 7);
-  const distance = formatDistanceToNowStrict(adjustedDate, { addSuffix: false });
+  const distance = formatDistanceToNowStrict(adjustedDate, {
+    addSuffix: false,
+  });
 
   // Replace words with abbreviations
   return distance
@@ -26,7 +28,8 @@ export function formatChatTime(date: Date | string) {
   if (date == "Invalid Date") {
     return "";
   }
-  const inputDate = new Date(date);
+  const adjustedDate = addHours(new Date(date), 7);
+  const inputDate = new Date(adjustedDate);
   const now = new Date();
 
   // if the date is today, show the time
@@ -65,4 +68,13 @@ export function formatChatTime(date: Date | string) {
 
   // if the date is not within this year, show the full date
   return inputDate.toLocaleDateString();
+}
+
+export function getTime(date: Date | string) {
+  const adjustedDate = addHours(new Date(date), 7);
+  return adjustedDate.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 }

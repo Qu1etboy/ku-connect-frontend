@@ -22,7 +22,6 @@ export default function ChatListPage() {
     queryKey: ["pendingInteractions"],
     queryFn: () => getPendingInteractions(),
   });
-  console.log("pendingInteractions", pendingInteractions);
 
   const handleChatRoomClick = (chatId: string) => {
     router.push(`/chat/${chatId}`);
@@ -85,7 +84,10 @@ export default function ChatListPage() {
               onClick={() => handleChatRoomClick(chat.chat_id)}
             >
               <Avatar className="h-12 w-12">
-                <AvatarImage src={getProfileImageUrl(chat.avatar)} alt={chat.name} />
+                <AvatarImage
+                  src={getProfileImageUrl(chat.avatar)}
+                  alt={chat.name}
+                />
                 <AvatarFallback>{chat.name[0]}</AvatarFallback>
               </Avatar>
               <div className="flex-1">

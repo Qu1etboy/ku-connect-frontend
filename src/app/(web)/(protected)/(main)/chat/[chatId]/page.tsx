@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSocket } from "@/contexts/socket";
 import { useUser } from "@/hooks/user";
 import { ChatMessage, getChat, TargetUser } from "@/services/chat";
+import { getTime } from "@/utils/date";
 import { getProfileImageUrl } from "@/utils/url";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -170,7 +171,7 @@ export default function ChatPage() {
                       <p className="text-xs text-gray-500">Read</p>
                     )}
                     <p className="text-xs text-gray-500">
-                      {message.createdTime.slice(11, 16)}
+                      {getTime(new Date(message.createdTime))}
                     </p>
                   </div>
                   <div className="mt-2 rounded-xl rounded-tr-none bg-green-500 p-2">
@@ -195,7 +196,9 @@ export default function ChatPage() {
               <div key={message.id} className="flex space-x-2">
                 {displayAvatar ? (
                   <Avatar className="mt-2 h-8 w-8">
-                    <AvatarImage src={getProfileImageUrl(chatData?.avatar || "")} />
+                    <AvatarImage
+                      src={getProfileImageUrl(chatData?.avatar || "")}
+                    />
                     <AvatarFallback>{chatData?.name[0]}</AvatarFallback>
                   </Avatar>
                 ) : (
@@ -207,7 +210,7 @@ export default function ChatPage() {
                   </p>
                 </div>
                 <p className="self-end text-xs text-gray-500">
-                  {message.createdTime.slice(11, 16)}
+                  {getTime(new Date(message.createdTime))}
                 </p>
               </div>
             </>
