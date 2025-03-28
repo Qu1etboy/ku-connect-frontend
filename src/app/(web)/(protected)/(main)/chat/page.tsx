@@ -39,7 +39,7 @@ export default function ChatListPage() {
               {pendingInteractions?.pendingInteractions
                 .slice(0, MAX_DISPLAY)
                 .map((interaction, index) => (
-                  <Avatar key={index} className="h-10 w-10">
+                  <Avatar key={index} className="h-10 w-10 bg-white shadow-md">
                     <AvatarImage
                       src={getProfileImageUrl(interaction.image ?? "")}
                       alt="avatar"
