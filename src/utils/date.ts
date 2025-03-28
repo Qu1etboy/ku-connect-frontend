@@ -22,6 +22,9 @@ export function formatShortDistanceToNow(date: Date | string) {
 }
 
 export function formatChatTime(date: Date | string) {
+  if (date == "Invalid Date") {
+    return "";
+  }
   const inputDate = new Date(date);
   const now = new Date();
 
