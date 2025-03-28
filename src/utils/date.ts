@@ -1,8 +1,9 @@
-import { formatDistanceToNowStrict } from "date-fns";
+import { addHours, formatDistanceToNowStrict } from "date-fns";
 
 export function formatShortDistanceToNow(date: Date | string) {
   // Get the strict distance as a string
-  const distance = formatDistanceToNowStrict(date, { addSuffix: false });
+  const adjustedDate = addHours(new Date(date), 7);
+  const distance = formatDistanceToNowStrict(adjustedDate, { addSuffix: false });
 
   // Replace words with abbreviations
   return distance
