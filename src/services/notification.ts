@@ -1,4 +1,3 @@
-import { createClient } from "@/lib/supabase/client";
 import { instance } from "@/utils/axios";
 import { getHeaders } from "./services";
 
