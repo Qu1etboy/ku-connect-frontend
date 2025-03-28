@@ -1,11 +1,11 @@
 import MobileContainer from "@/components/container/mobile";
+import DebugTool from "@/components/debug-tool";
 import InstallPrompt from "@/components/install-prompt";
 import Providers from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import DebugTool from "@/components/debug-tool";
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -22,15 +22,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/ku-connect-bg-white.svg",
+    apple: "/ku-connect-bg-white.svg",
   },
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 };
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-};
+export const viewport = "width=device-width, initial-scale=1";
 
 export default function RootLayout({
   children,

@@ -70,7 +70,7 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
     <div className="flex space-x-4 border-t border-gray-100 p-4 shadow-sm">
       <Textarea
         maxLength={150}
-        className="min-h-9 resize-none"
+        className="min-h-9 resize-none text-base"
         rows={1}
         value={message}
         onChange={handleChange}
