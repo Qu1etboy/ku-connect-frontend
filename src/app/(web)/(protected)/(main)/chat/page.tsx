@@ -28,15 +28,13 @@ export default function ChatListPage() {
     router.push(`/chat/${chatId}`);
   };
 
-  // TODO: update connection request to use real data
-
   return (
     <MainLayout title="Chat">
       <div className="flex h-full flex-col">
         {/* Friends */}
         <div className="flex items-center space-x-4 px-4 py-7">
           {/* Avatar */}
-          {(pendingInteractions?.count ?? 0) > 0 ?(
+          {(pendingInteractions?.count ?? 0) > 0 ? (
             <div className="flex -space-x-5">
               {pendingInteractions?.pendingInteractions
                 .slice(0, MAX_DISPLAY)

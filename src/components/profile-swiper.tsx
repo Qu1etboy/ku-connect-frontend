@@ -1,3 +1,6 @@
+import { updateInteraction } from "@/services/interaction";
+import { useMutation } from "@tanstack/react-query";
+import { useRef } from "react";
 import { toast } from "sonner";
 import { default as Profile, default as ProfileCard } from "./profile";
 
@@ -33,7 +36,7 @@ type Profile = {
 
 type ProfileSwiperProps = {
   profiles: Profile[];
-  setConnectedProfile: (profile: Profile) => void;
+  setConnectedProfile: (profile: Profile, chatId: string) => void;
   children: React.ReactNode;
 };
 
@@ -42,27 +45,37 @@ export default function ProfileSwiper({
   setConnectedProfile,
   children,
 }: ProfileSwiperProps) {
+  const profileRef = useRef<Profile | null>(null);
+
+  const { mutate: updateInteractionData } = useMutation({
+    mutationFn: updateInteraction,
+    onSuccess: (data) => {
+      console.log("Interaction successful", data);
+      if (data.connected && profileRef.current) {
+        setConnectedProfile(profileRef.current, data.chatId || "");
+        profileRef.current = null;
+      }
+    },
+    onError: () => {
+      toast.error("Failed to send interaction", {
+        position: "top-center",
+      });
+    },
+  });
+
   const onLiked = (id: string, profile: Profile) => {
-    // TODO: Send like request to backend
-    // toast.success("You liked " + id, {
-    //   position: "bottom-center",
-    // });
-    console.log("Liked", id);
-
-    // TODO: Add animation
-
-    // match
-    setConnectedProfile(profile);
+    profileRef.current = profile;
+    updateInteractionData({
+      toUserId: id,
+      liked: true,
+    });
   };
 
   const onDisliked = (id: string) => {
-    // TODO: Send dislike request to backend
-    toast.error("You disliked " + id, {
-      position: "top-center",
+    updateInteractionData({
+      toUserId: id,
+      liked: false,
     });
-    console.log("Disliked", id);
-
-    // TODO: Add animation
   };
 
   return (
@@ -71,8 +84,8 @@ export default function ProfileSwiper({
         <ProfileCard
           key={profile.id}
           profile={profile}
-          onLiked={() => onLiked(profile.id, profile)}
-          onDisliked={() => onDisliked(profile.id)}
+          onLiked={() => onLiked(profile.userId, profile)}
+          onDisliked={() => onDisliked(profile.userId)}
         />
       ))}
       {children}

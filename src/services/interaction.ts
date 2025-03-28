@@ -8,6 +8,7 @@ export interface UpdateInteractionRequest {
 
 export interface UpdateInteractionResponse {
   connected: boolean;
+  chatId?: string;
 }
 
 export const updateInteraction = async (payload: UpdateInteractionRequest) => {

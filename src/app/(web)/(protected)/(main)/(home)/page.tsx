@@ -50,13 +50,18 @@ export default function Home() {
     }
   }, [inView]);
 
-  const [connectedProfile, setConnectedProfile] = useState<Profile>();
+  const [connectedProfile, setConnectedProfile] = useState<{
+    profile: Profile;
+    chatId: string;
+  }>();
 
   return (
     <main className="flex h-dvh flex-col transition-all duration-300">
       <ProfileSwiper
         profiles={data?.pages.flatMap((page) => page.profiles) || []}
-        setConnectedProfile={setConnectedProfile}
+        setConnectedProfile={(profile, chatId) =>
+          setConnectedProfile({ profile, chatId })
+        }
       >
         <p ref={ref}></p>
         {isPending ||

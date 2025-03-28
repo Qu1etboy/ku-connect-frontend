@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import Pride from "react-canvas-confetti/dist/presets/pride";
 import { TDecorateOptionsFn } from "react-canvas-confetti/dist/types";
 import ConnectionCard from "./connection-card";
+import { useRouter } from "next/navigation";
 interface ProfileConnectedPageProps {
-  connectedProfiles: Profile;
+  connectedProfiles: {profile: Profile; chatId: string};
   onBack: () => void;
 }
 
@@ -17,7 +18,7 @@ export default function ProfileConnectedPage({
   onBack,
 }: ProfileConnectedPageProps) {
   const { data: myProfile } = useMyProfile();
-  // const router = useRouter();
+  const router = useRouter();
   const confettiDecorateOptions: TDecorateOptionsFn = (defaultOptions) => {
     return {
       ...defaultOptions,
@@ -58,13 +59,15 @@ export default function ProfileConnectedPage({
           </p>
         </div>
         <ConnectionCard
-          leftImage={connectedProfiles.image}
-          leftName={connectedProfiles.displayName}
+          leftImage={connectedProfiles.profile.image}
+          leftName={connectedProfiles.profile.displayName}
           rightImage={myProfile.image}
           rightName={myProfile.displayName}
         />
         <div className="flex w-full flex-col items-center space-y-4 px-11">
-          <Button size="lg" className="w-full" onClick={() => {}}>
+          <Button size="lg" className="w-full" onClick={() => {
+            router.push(`/chat/${connectedProfiles.chatId}`);
+          }}>
             Go to Chat
           </Button>
           <Button size="lg" variant="link" className="w-full" onClick={onBack}>
