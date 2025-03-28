@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSocket } from "@/contexts/socket";
 import { useUser } from "@/hooks/user";
 import { ChatMessage, getChat, TargetUser } from "@/services/chat";
+import { getProfileImageUrl } from "@/utils/url";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -194,7 +195,7 @@ export default function ChatPage() {
               <div key={message.id} className="flex space-x-2">
                 {displayAvatar ? (
                   <Avatar className="mt-2 h-8 w-8">
-                    <AvatarImage src={chatData?.avatar} />
+                    <AvatarImage src={getProfileImageUrl(chatData?.avatar || "")} />
                     <AvatarFallback>{chatData?.name[0]}</AvatarFallback>
                   </Avatar>
                 ) : (

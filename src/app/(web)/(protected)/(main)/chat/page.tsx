@@ -44,7 +44,7 @@ export default function ChatListPage() {
                       src={getProfileImageUrl(interaction.image ?? "")}
                       alt="avatar"
                     />
-                    <AvatarFallback>U</AvatarFallback>
+                    <AvatarFallback>interaction.name[0]</AvatarFallback>
                   </Avatar>
                 ))}
               {/* More */}
@@ -85,7 +85,7 @@ export default function ChatListPage() {
               onClick={() => handleChatRoomClick(chat.chat_id)}
             >
               <Avatar className="h-12 w-12">
-                <AvatarImage src={chat.avatar} alt={chat.name} />
+                <AvatarImage src={getProfileImageUrl(chat.avatar)} alt={chat.name} />
                 <AvatarFallback>{chat.name[0]}</AvatarFallback>
               </Avatar>
               <div className="flex-1">
