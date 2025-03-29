@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description: "Find friends, join activities, and connect with Nisit Kaset.",
   // Set your document to flow to the Iphone's notch area
   appleWebApp: {
+    title: "KU Connect",
     capable: true,
     statusBarStyle: "black-translucent",
   },
