@@ -4,4 +4,5 @@ export const config = {
   SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
   ENV: process.env.NEXT_PUBLIC_NODE_ENV || "development",
   CLIENT_URL: process.env.NEXT_PUBLIC_CLIENT_URL || "http://localhost:3000",
+  VAPID_PRIVATE_KEY: process.env.VAPID_PRIVATE_KEY as string,
 };

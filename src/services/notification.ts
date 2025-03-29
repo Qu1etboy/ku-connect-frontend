@@ -1,5 +1,6 @@
 import { instance } from "@/utils/axios";
 import { getHeaders } from "./services";
+import { PushSubscription } from "web-push";
 
 export async function fetchMyNotification(page: number, size: number) {
   const headers = await getHeaders();
@@ -29,4 +30,18 @@ export async function readNotifications(notificationIds: string[]) {
   );
 
   return notificationIds;
+}
+
+export async function subscribeNotification(subscription: PushSubscription) {
+  const headers = await getHeaders();
+
+  await instance.post(
+    `/api/notifications/subscribe`,
+    {
+      subscription,
+    },
+    {
+      headers,
+    },
+  );
 }

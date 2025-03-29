@@ -1,4 +1,5 @@
 import AuthProtected from "@/components/guard/auth";
+import NotificationManager from "@/components/notification-manager";
 import React from "react";
 
 /**
@@ -9,5 +10,9 @@ export default function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AuthProtected>{children}</AuthProtected>;
+  return (
+    <AuthProtected>
+      <NotificationManager>{children}</NotificationManager>
+    </AuthProtected>
+  );
 }
