@@ -21,10 +21,6 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "black-translucent",
   },
-  icons: {
-    icon: "/ku-connect-bg-white.svg",
-    apple: "/ku-connect-bg-white.svg",
-  },
 };
 
 export const viewport = "width=device-width, initial-scale=1";
