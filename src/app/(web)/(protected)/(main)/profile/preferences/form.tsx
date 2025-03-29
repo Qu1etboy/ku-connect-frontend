@@ -8,6 +8,9 @@ import { type Settings } from "@/services/settings";
 import { config } from "@/config";
 import { toast } from "sonner";
 import { useUpdateSettings } from "@/hooks/settings";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 const group: {
   name?: string;
@@ -87,6 +90,22 @@ export default function PreferencesForm({
           </div>
         ))}
       </form>
+      <div className="border-b p-6">
+        <h2 className="mb-3 font-bold">Push Notification</h2>
+        <p className="mb-6 text-sm text-muted-foreground">
+          To update your notification settings, go to your browser settings and
+          allow notifications for this site.
+        </p>
+        <div className="flex flex-row items-center justify-between rounded-lg p-3">
+          <div className="space-y-0.5">
+            <Label>
+              {Notification.permission === "granted"
+                ? "✅ Push notification is enabled"
+                : "❌ Push notification is enabled"}
+            </Label>
+          </div>
+        </div>
+      </div>
     </Form>
   );
 }
