@@ -37,7 +37,7 @@ export default function InterestsForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="max-h-[45vh] overflow-auto">
+        <div className="max-h-[calc(100dvh-320px)] overflow-auto">
           {fields.map((field) => (
             <InputField
               key={field.id}
