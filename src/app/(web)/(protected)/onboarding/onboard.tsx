@@ -156,7 +156,7 @@ export default function OnBoard({ user, interests }: OnBoardProps) {
       </header>
 
       <main className="flex-grow">
-        <div className="flex h-[25vh] flex-col items-center justify-evenly gap-3 py-8">
+        <div className="flex h-[25dvh] flex-col items-center justify-evenly gap-3 py-8">
           {isFirstStep ? (
             renderFormattedTitle(current.title)
           ) : (
@@ -171,7 +171,7 @@ export default function OnBoard({ user, interests }: OnBoardProps) {
           )}
         </div>
         <div
-          className={`max-h-[45vh] overflow-auto ${
+          className={`max-h-[45dvh] overflow-auto ${
             current.card
               ? "rounded-lg border border-gray-200 bg-white p-4 shadow-md"
               : ""

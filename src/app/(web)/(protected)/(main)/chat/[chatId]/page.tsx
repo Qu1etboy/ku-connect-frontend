@@ -152,7 +152,7 @@ export default function ChatPage() {
       profile={profileData}
     >
       <div
-        className="h-[calc(100vh-10rem)] overflow-y-auto px-3 pb-2"
+        className="h-[calc(100dvh-10rem)] overflow-y-auto px-3 pb-2"
         onScroll={handleScroll}
         ref={chatContainerRef}
       >
