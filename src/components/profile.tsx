@@ -78,21 +78,21 @@ export default function ProfileCard({
 
   return (
     <div className="relative h-[calc(100dvh-85px)] w-full snap-center snap-always md:h-[calc(100dvh-65px)]">
-      <div className="flex max-h-[55%] items-center justify-center overflow-hidden">
+      <div className="flex max-h-[55%] min-h-[55%] items-center justify-center overflow-hidden bg-gray-200">
         <img
           src={getProfileImageUrl(profile.image ?? "")}
           alt={profile.displayName}
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
         />
       </div>
-      <section className="relative flex h-[45%] flex-col justify-evenly px-4">
+      <section className="relative flex h-[45%] flex-col justify-between px-4">
         <div className="absolute -top-20 left-0 right-0 h-24 w-full bg-gradient-to-t from-white from-30% via-white/50 via-60% to-transparent to-100%"></div>
         <div className="relative top-[-10px] z-10 bg-white">
           <h1 className="text-xl font-bold">{profile.displayName}</h1>
           <p className="text-sm text-gray-500">{renderNisitInfo()}</p>
           <p className="mt-2">{renderBio()}</p>
           <ProfileMore profile={profile} nisitInfo={renderNisitInfo()} />
-          <div className="my-4 flex flex-wrap gap-2">
+          <div className="my-1 flex flex-wrap gap-2">
             {profile.interests.slice(0, MAX_BADGE_LENGTH).map((interest) => (
               <Badge key={interest.id} variant="outline">
                 {interest.name}
@@ -105,7 +105,7 @@ export default function ProfileCard({
             )}
           </div>
         </div>
-        <div className="flex justify-between px-8">
+        <div className="flex justify-between px-8 pb-4">
           <Button
             variant="outline"
             className="h-[100px] w-[100px] rounded-full shadow-lg hover:bg-red-100 active:scale-95"
