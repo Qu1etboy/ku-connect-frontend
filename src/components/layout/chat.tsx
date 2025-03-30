@@ -46,7 +46,7 @@ export default function ChatLayout({
               <InfoIcon className="text-muted-foreground" />
             </ProfileMore>
           ) : (
-            <Skeleton className="h-10 w-10 rounded-full bg-white shadow-md" />
+            <Skeleton className="h-6 w-6 rounded-full" />
           )}
         </div>
       </header>
@@ -77,7 +77,7 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
     setMessage("");
   };
   return (
-    <div className="flex space-x-4 border-t border-gray-100 p-4 shadow-sm">
+    <div className="flex space-x-4 border-t border-gray-100 p-4 pb-6 shadow-sm md:pb-4">
       <Textarea
         maxLength={150}
         className="min-h-9 resize-none text-base"
