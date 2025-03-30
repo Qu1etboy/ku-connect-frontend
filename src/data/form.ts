@@ -42,12 +42,6 @@ export const personalInfoForm: FormDataType[] = [
     label: "Bio",
     placeholder: "Enter your bio",
   },
-  {
-    id: "birthdate",
-    type: "date",
-    label: "Birthdate",
-    placeholder: "Enter your birthdate",
-  },
 ];
 
 export const nisitInfoForm: FormDataType[] = [
@@ -315,7 +309,6 @@ export const formSchema = z.object({
   year: z.string(),
   displayName: z.string(),
   bio: z.string(),
-  birthdate: z.date(),
   line: z.string(),
   facebook: z.string(),
   instagram: z.string(),

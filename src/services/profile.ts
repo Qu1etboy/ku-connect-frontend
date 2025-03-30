@@ -8,7 +8,6 @@ export type Profile = {
   userId: string;
   displayName: string;
   bio: string | null;
-  birthdate: string | null;
   faculty: string | null;
   department: string | null;
   year: number | null;

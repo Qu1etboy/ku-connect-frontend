@@ -4,17 +4,16 @@ import InputField from "@/components/form/input";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Progress } from "@/components/ui/progress";
+import { config } from "@/config";
+import { formSchema, ProfileForm, SystemInterest } from "@/data/form";
+import { useCreateProfile } from "@/hooks/profile";
+import { User } from "@/hooks/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { getData, fieldOfStudy } from "./data";
-import { User } from "@/hooks/user";
-import { createProfile } from "@/services/profile";
-import { SystemInterest, formSchema, ProfileForm } from "@/data/form";
-import { config } from "@/config";
-import { useCreateProfile } from "@/hooks/profile";
+import { fieldOfStudy, getData } from "./data";
 
 type OnBoardProps = {
   user: User;
@@ -31,7 +30,6 @@ export default function OnBoard({ user, interests }: OnBoardProps) {
       year: "",
       displayName: user.full_name,
       bio: "",
-      birthdate: undefined,
       line: "",
       facebook: "",
       instagram: "",
