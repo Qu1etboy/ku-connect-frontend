@@ -3,7 +3,7 @@ import DebugTool from "@/components/debug-tool";
 import InstallPrompt from "@/components/install-prompt";
 import Providers from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -23,8 +23,11 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport =
-  "width=device-width, initial-scale=1, viewport-fit=cover";
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export default function RootLayout({
   children,
