@@ -14,7 +14,23 @@ self.addEventListener("push", function (event) {
         url: data.url,
       },
     };
-    event.waitUntil(self.registration.showNotification(data.title, options));
+
+    // event.waitUntil(self.registration.showNotification(data.title, options));
+    event.waitUntil(
+      self.clients
+        .matchAll({ type: "window", includeUncontrolled: true })
+        .then((clients) => {
+          // Check if any client (tab) is focused
+          const isClientFocused = clients.some(
+            (client) => client.url.includes("/chat") && client.focused,
+          );
+
+          if (!isClientFocused) {
+            // Only show notification when user is not active in the app
+            self.registration.showNotification(data.title, options);
+          }
+        }),
+    );
   }
 });
 
