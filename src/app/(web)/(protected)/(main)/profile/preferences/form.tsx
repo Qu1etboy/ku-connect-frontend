@@ -3,14 +3,12 @@
 import InputField from "@/components/form/input";
 import { FormDataType } from "@/components/form/type";
 import { Form } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { type Settings } from "@/services/settings";
-import { config } from "@/config";
-import { toast } from "sonner";
-import { useUpdateSettings } from "@/hooks/settings";
-import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { config } from "@/config";
+import { useUpdateSettings } from "@/hooks/settings";
+import { type Settings } from "@/services/settings";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const group: {
   name?: string;

@@ -1,7 +1,7 @@
 import { ProfileForm } from "@/data/form";
 import { instance } from "@/utils/axios";
+import { isNil, omitBy } from "lodash";
 import { getHeaders } from "./services";
-import { omitBy, isNil } from "lodash";
 
 export type Profile = {
   id: string;
@@ -28,6 +28,10 @@ export type Profile = {
   };
   similarity: number;
   interests: Interest[];
+  line: string | null;
+  facebook: string | null;
+  instagram: string | null;
+  other: string | null;
 };
 
 export type Interest = {

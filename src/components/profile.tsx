@@ -4,6 +4,7 @@ import { getProfileImageUrl } from "@/utils/url";
 import { AnimatePresence, motion } from "framer-motion";
 import { HeartHandshake, HeartOff } from "lucide-react";
 import { useState } from "react";
+import ProfileMore from "./profile-more";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
@@ -83,16 +84,15 @@ export default function ProfileCard({
         />
       </div>
       <section className="relative flex h-[45%] flex-col justify-between px-4">
-        <div className="absolute left-0 right-0 top-[-40px] h-[50px] w-full bg-gradient-to-t from-white from-10% via-white/50 via-50% to-transparent to-100% backdrop-blur-sm"></div>
+        <div className="absolute -top-20 left-0 right-0 h-24 w-full bg-gradient-to-t from-white from-30% via-white/50 via-60% to-transparent to-100%"></div>
         <div className="relative top-[-10px] z-10">
           <h1 className="text-xl font-bold">{profile.displayName}</h1>
           <p className="text-sm text-gray-500">{renderNisitInfo()}</p>
           <p className="mt-2">{renderBio()}</p>
-          {isBioLong() && (
-            <Button variant="link" className="px-0 text-sm text-green-500">
-              Read more
-            </Button>
-          )}
+          <ProfileMore
+            profile={profile}
+            nisitInfo={renderNisitInfo()}
+          />
           <div className="my-4 flex flex-wrap gap-2">
             {profile.interests.map((interest) => (
               <Badge key={interest.id} variant="outline">
