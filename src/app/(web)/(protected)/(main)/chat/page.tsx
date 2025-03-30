@@ -113,8 +113,8 @@ export default function ChatListPage() {
                   )}
                 </div>
                 {chat.last_message && (
-                  <div className="flex items-center justify-between">
-                    <p className="text-muted-foreground">
+                  <div className="flex w-full items-center justify-between">
+                    <p className="max-w-[calc(100dvw-100px)] overflow-hidden text-ellipsis whitespace-nowrap text-muted-foreground">
                       {chat.last_message.content}
                     </p>
                     {chat.unread_count > 0 && (

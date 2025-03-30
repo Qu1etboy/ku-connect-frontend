@@ -182,7 +182,7 @@ export default function ChatPage() {
                     </p>
                   </div>
                   <div className="mt-2 rounded-xl rounded-tr-none bg-green-500 p-2">
-                    <p className="whitespace-pre-wrap text-sm">
+                    <p className="whitespace-pre-wrap break-all text-sm">
                       {message.content}
                     </p>
                   </div>
@@ -212,7 +212,7 @@ export default function ChatPage() {
                   <div className="min-w-8" />
                 )}
                 <div className="mt-2 rounded-xl rounded-tl-none bg-gray-100 p-2">
-                  <p className="whitespace-pre-wrap text-sm">
+                  <p className="whitespace-pre-wrap break-all text-sm">
                     {message.content}
                   </p>
                 </div>
