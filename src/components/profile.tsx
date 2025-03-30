@@ -85,7 +85,7 @@ export default function ProfileCard({
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
         />
       </div>
-      <section className="relative flex h-[45%] flex-col justify-between px-4">
+      <section className="relative flex h-[45%] flex-col justify-evenly px-4">
         <div className="absolute -top-20 left-0 right-0 h-24 w-full bg-gradient-to-t from-white from-30% via-white/50 via-60% to-transparent to-100%"></div>
         <div className="relative top-[-10px] z-10 bg-white">
           <h1 className="text-xl font-bold">{profile.displayName}</h1>
@@ -105,7 +105,7 @@ export default function ProfileCard({
             )}
           </div>
         </div>
-        <div className="flex justify-between px-8 pb-8">
+        <div className="flex justify-between px-8">
           <Button
             variant="outline"
             className="h-[100px] w-[100px] rounded-full shadow-lg hover:bg-red-100 active:scale-95"
