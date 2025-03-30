@@ -99,7 +99,9 @@ export default function ProfileCard({
               </Badge>
             ))}
             {profile.interests.length > MAX_BADGE_LENGTH && (
-              <Badge variant="outline">+{profile.interests.length - MAX_BADGE_LENGTH}</Badge>
+              <Badge variant="outline">
+                +{profile.interests.length - MAX_BADGE_LENGTH}
+              </Badge>
             )}
           </div>
         </div>

@@ -28,6 +28,7 @@ export async function listChat() {
 export interface TargetUser {
   name: string;
   avatar: string;
+  id: string;
 }
 
 export interface GetChatResponse {

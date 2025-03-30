@@ -1,7 +1,9 @@
-import { ChevronLeft, Navigation2 } from "lucide-react";
+import { Profile } from "@/services/profile";
+import { ChevronLeft, InfoIcon, Navigation2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { ThreeDot } from "react-loading-indicators";
+import ProfileMore from "../profile-more";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import { Textarea } from "../ui/textarea";
@@ -12,7 +14,7 @@ type ChatLayoutProps = {
   isLoading?: boolean;
   handleSendMessage: (content: string) => void;
   children: React.ReactNode;
-  onclick?: () => void;
+  profile?: Profile;
 };
 
 export default function ChatLayout({
@@ -21,13 +23,14 @@ export default function ChatLayout({
   isLoading,
   children,
   handleSendMessage,
+  profile,
 }: ChatLayoutProps) {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="pt-safe sticky top-0 z-20 border-b bg-white shadow-sm">
-        <div className="header-safe grid grid-cols-12 place-content-center text-center">
+        <div className="header-safe flex place-content-center justify-between px-4 text-center align-middle">
           {backUrl && (
-            <Link href={backUrl} className="pl-4 pt-0.5">
+            <Link href={backUrl}>
               <ChevronLeft />
             </Link>
           )}
@@ -37,6 +40,13 @@ export default function ChatLayout({
             <h1 className="col-span-6 col-start-4 text-lg font-bold md:text-xl">
               {title}
             </h1>
+          )}
+          {profile ? (
+            <ProfileMore profile={profile} visibility="connected">
+              <InfoIcon className="text-muted-foreground" />
+            </ProfileMore>
+          ) : (
+            <Skeleton className="h-10 w-10 rounded-full bg-white shadow-md" />
           )}
         </div>
       </header>

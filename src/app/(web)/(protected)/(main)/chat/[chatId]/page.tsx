@@ -4,9 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSocket } from "@/contexts/socket";
 import { useUser } from "@/hooks/user";
 import { ChatMessage, getChat, TargetUser } from "@/services/chat";
+import { getProfile } from "@/services/profile";
 import { getTime } from "@/utils/date";
 import { getProfileImageUrl } from "@/utils/url";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -32,6 +33,12 @@ export default function ChatPage() {
       console.error(error);
       //TODO: handle error
     },
+  });
+
+  const { data: profileData } = useQuery({
+    queryKey: ["getProfile"],
+    queryFn: () => getProfile(chatData?.id || ""),
+    enabled: !!chatData,
   });
 
   let prevMinute = "";
@@ -74,7 +81,6 @@ export default function ChatPage() {
 
   useEffect(() => {
     if (!socket) return;
-    
     // Window focus
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
@@ -143,6 +149,7 @@ export default function ChatPage() {
       backUrl="/chat"
       isLoading={isChatLoading}
       handleSendMessage={handleSendMessage}
+      profile={profileData}
     >
       <div
         className="h-[calc(100vh-10rem)] overflow-y-auto px-3"

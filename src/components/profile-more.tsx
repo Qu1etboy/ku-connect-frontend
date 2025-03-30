@@ -15,8 +15,15 @@ import {
 interface ProfileMoreProps {
   profile: Profile;
   nisitInfo?: string;
+  children?: React.ReactNode;
+  visibility?: "public" | "connected";
 }
-export default function ProfileMore({ profile, nisitInfo }: ProfileMoreProps) {
+export default function ProfileMore({
+  profile,
+  nisitInfo,
+  children,
+  visibility = "public",
+}: ProfileMoreProps) {
   const contactInfo = [
     { name: "Line", value: profile.line },
     { name: "Facebook", value: profile.facebook },
@@ -24,12 +31,33 @@ export default function ProfileMore({ profile, nisitInfo }: ProfileMoreProps) {
     { name: "Other", value: profile.other },
   ];
 
+  const isContactInfoVisible =
+    profile.settings.contactInfoVisibility === "public" ||
+    (visibility === "connected" &&
+      profile.settings.contactInfoVisibility === "connected");
+
+  const renderNisitInfo = () => {
+    let info = "";
+    if (profile.faculty) {
+      info += `Faculty of ${profile.faculty}, `;
+    }
+    if (profile.department) {
+      info += `${profile.department}, `;
+    }
+    if (profile.year) {
+      info += `${profile.year}`;
+    }
+    return info;
+  };
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button variant="link" className="px-0 text-sm text-green-500">
-          Read more
-        </Button>
+        {children || (
+          <Button variant="link" className="px-0 text-sm text-green-500">
+            Read more
+          </Button>
+        )}
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto max-h-[80dvh] min-h-[80dvh] w-full max-w-sm overflow-scroll">
@@ -50,12 +78,14 @@ export default function ProfileMore({ profile, nisitInfo }: ProfileMoreProps) {
               </h1>
             </DrawerTitle>
             <DrawerDescription>
-              <p className="text-left text-base font-semibold">{nisitInfo}</p>
+              <p className="text-left text-base font-semibold">
+                {nisitInfo || renderNisitInfo()}
+              </p>
               <p className="mt-2 text-left">{profile.bio}</p>
             </DrawerDescription>
           </DrawerHeader>
 
-          <div className="space-y-6 px-4 pt-2 pb-6">
+          <div className="space-y-6 px-4 pb-6 pt-2">
             <div>
               <h2 className="font-semibold text-muted-foreground">Interests</h2>
               <div className="my-4 flex flex-wrap gap-2">
@@ -70,7 +100,7 @@ export default function ProfileMore({ profile, nisitInfo }: ProfileMoreProps) {
                 ))}
               </div>
             </div>
-            {profile.settings.contactInfoVisibility === "public" && (
+            {isContactInfoVisible && (
               <div>
                 <h2 className="font-semibold text-muted-foreground">
                   Contact Information

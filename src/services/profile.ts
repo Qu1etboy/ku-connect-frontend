@@ -62,7 +62,7 @@ export const listProfiles = async (page: number, size: number) => {
 
 export const getProfile = async (id: string) => {
   const headers = await getHeaders();
-  const response = await instance.get(`/api/profiles/${id}`, {
+  const response = await instance.get<Profile>(`/api/profiles/${id}`, {
     headers,
   });
 
