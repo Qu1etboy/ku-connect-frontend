@@ -23,7 +23,8 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport = "width=device-width, initial-scale=1";
+export const viewport =
+  "width=device-width, initial-scale=1, viewport-fit=cover";
 
 export default function RootLayout({
   children,
