@@ -77,7 +77,7 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
     setMessage("");
   };
   return (
-    <div className="flex space-x-4 border-t border-gray-100 p-4 pb-6 shadow-sm md:pb-4">
+    <div className="flex space-x-4 border-t border-gray-100 p-4 pb-8 shadow-sm md:pb-4">
       <Textarea
         maxLength={150}
         className="min-h-9 resize-none text-base"
