@@ -252,7 +252,7 @@ export default function InputField({
               <button
                 type="button"
                 className={cn(
-                  "absolute right-1 top-1 h-7 w-9 rounded-full text-green-600 hover:bg-gray-100 hover:text-green-800",
+                  "absolute right-1 top-1 z-[1] h-7 w-9 rounded-full text-green-600 hover:bg-gray-100 hover:text-green-800",
                   type !== "text" && type !== "textarea" ? "mr-8" : "",
                 )}
                 onClick={onReset}
