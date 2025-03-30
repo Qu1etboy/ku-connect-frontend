@@ -1,5 +1,3 @@
-import { z } from "zod";
-import { OnboardingData } from "./type";
 import {
   contactForm,
   interestsForm,
@@ -8,6 +6,7 @@ import {
   SystemInterest,
 } from "@/data/form";
 import { User } from "@/hooks/user";
+import { OnboardingData } from "./type";
 
 export const fieldOfStudy: {
   [key: string]: { value: string; label: string }[];
@@ -199,13 +198,15 @@ export const fieldOfStudy: {
   ],
 };
 
-export const getData = (user: User, interests: SystemInterest[]): OnboardingData => {
+export const getData = (
+  user: User,
+  interests: SystemInterest[],
+): OnboardingData => {
   return {
     steps: [
       {
         step: 1,
-        title:
-          `Welcome to KU Connect,\n<green>${user.full_name}!<green>\nLet's set up your profile.`,
+        title: `Welcome to KU Connect,\n<green>${user.full_name}!<green>\nLet's set up your profile.`,
         description: "",
         skippable: true,
         card: true,
@@ -254,4 +255,4 @@ export const getData = (user: User, interests: SystemInterest[]): OnboardingData
       },
     ],
   };
-}
+};

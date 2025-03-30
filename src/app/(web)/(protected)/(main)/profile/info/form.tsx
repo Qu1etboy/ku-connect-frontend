@@ -13,13 +13,18 @@ import {
 } from "@/components/ui/drawer";
 import { Form } from "@/components/ui/form";
 import { config } from "@/config";
-import { contactForm, nisitInfoForm, personalInfoForm } from "@/data/form";
+import {
+  contactForm,
+  fieldOfStudy,
+  nisitInfoForm,
+  personalInfoForm,
+} from "@/data/form";
 import { useUpdateMyProfile } from "@/hooks/profile";
 import { User } from "@/hooks/user";
 import { upload } from "@/utils/storage";
 import { getProfileImageUrl } from "@/utils/url";
 import { CameraIcon, ChevronRightIcon } from "lucide-react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -41,6 +46,7 @@ export default function ProfileInfomationForm({
   user: User;
   defaultValues: any;
 }) {
+  const [departmentData, setDepartmentData] = useState<any>(null);
   const form = useForm({
     defaultValues,
   });
@@ -75,6 +81,23 @@ export default function ProfileInfomationForm({
       });
     }
   };
+
+  const formWatch = form.watch();
+  useEffect(() => {
+    // Update department data based on faculty selection
+    const { faculty } = formWatch;
+    setDepartmentData(fieldOfStudy[faculty]);
+
+    // Clear department field if faculty is changed
+    if (
+      faculty &&
+      !fieldOfStudy[faculty]?.some(
+        (dept) => dept.value === formWatch.department,
+      )
+    ) {
+      form.setValue("department", "");
+    }
+  }, [formWatch.faculty]);
 
   if (mutation.isPending) {
     return <LoadingScreen />;
@@ -151,7 +174,11 @@ export default function ProfileInfomationForm({
                       type={field.type}
                       label={field.label}
                       placeholder={field.placeholder}
-                      data={field.data}
+                      data={
+                        field.label === "Department" && departmentData
+                          ? departmentData
+                          : field.data
+                      }
                     />
                     <DrawerFooter className="px-0">
                       <Button>Save</Button>
