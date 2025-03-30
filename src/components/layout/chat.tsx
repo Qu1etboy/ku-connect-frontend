@@ -82,7 +82,7 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
           }
         }}
       />
-      <Button onClick={handleSend}>
+      <Button onClick={handleSend} className="h-auto">
         <Navigation2 className="rotate-90" />
       </Button>
     </div>

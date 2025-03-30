@@ -5,13 +5,13 @@ import {
   NotificationIcon,
   NotificationType,
 } from "@/components/notification-icon";
+import { useSocket } from "@/contexts/socket";
 import { cn } from "@/lib/utils";
 import {
   fetchMyNotification,
   readNotifications,
 } from "@/services/notification";
 import { formatShortDistanceToNow } from "@/utils/date";
-import socket from "@/utils/socket";
 import {
   InfiniteData,
   useInfiniteQuery,
@@ -37,6 +37,7 @@ type Notification = {
 const PAGE_SIZE = 15;
 
 export default function AlertPage() {
+  const { socket } = useSocket();
   const queryClient = useQueryClient();
   const { data, isPending, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -80,9 +81,8 @@ export default function AlertPage() {
   };
 
   useEffect(() => {
-    if (!socket.connected) {
-      socket.connect();
-    }
+    if (!socket) return;
+
     socket.on("notification", (newNotification: Notification) => {
       console.log("Receive new notification", newNotification);
       queryClient.refetchQueries({
@@ -91,9 +91,9 @@ export default function AlertPage() {
     });
 
     return () => {
-      socket.disconnect();
+      socket.off("notification");
     };
-  }, []);
+  }, [socket]);
 
   return (
     <MainLayout title="Alerts" isLoading={isPending}>

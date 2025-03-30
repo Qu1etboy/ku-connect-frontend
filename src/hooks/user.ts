@@ -51,6 +51,7 @@ export function useUser() {
       setIsLoading(true);
       const { data } = await supabase.auth.getSession();
       console.log(data);
+      // localStorage.setItem("token", JSON.stringify(data.session?.access_token));
       setUser(
         data.session
           ? {

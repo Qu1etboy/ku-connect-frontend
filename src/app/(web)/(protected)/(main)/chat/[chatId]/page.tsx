@@ -1,14 +1,15 @@
 "use client";
 import ChatLayout from "@/components/layout/chat";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useSocket } from "@/contexts/socket";
 import { useUser } from "@/hooks/user";
 import { ChatMessage, getChat, TargetUser } from "@/services/chat";
-import socket from "@/utils/socket";
 import { useMutation } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function ChatPage() {
+  const { socket } = useSocket();
   const { chatId } = useParams<{ chatId: string }>();
   const { user } = useUser();
 
@@ -66,10 +67,12 @@ export default function ChatPage() {
       content: content,
       authorId: user?.userId,
     };
-    socket.emit("send_message", newMessage);
+    socket?.emit("send_message", newMessage);
   };
 
   useEffect(() => {
+    if (!socket) return;
+    
     // Window focus
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
@@ -103,10 +106,6 @@ export default function ChatPage() {
     };
     GetChatData();
 
-    // Socket connection
-    if (!socket.connected) {
-      socket.connect();
-    }
     socket.emit("join_chat", chatId);
     socket.on("receive_message", handleReceiveMessage);
     socket.on("read_message", handleReadMessage);
@@ -115,9 +114,9 @@ export default function ChatPage() {
       socket.off("receive_message");
       socket.off("read_message");
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-      socket.disconnect();
+      // socket.disconnect();
     };
-  }, [GetChatData, chatId, user?.name, user?.userId]);
+  }, [socket, GetChatData, chatId, user?.name, user?.userId]);
 
   useEffect(() => {
     if (isFirstLoad.current && messages.length > 0) {
@@ -131,7 +130,7 @@ export default function ChatPage() {
 
   useEffect(() => {
     if (isWindowFocused) {
-      socket.emit("mark_as_read", chatId, user?.userId);
+      socket?.emit("mark_as_read", chatId, user?.userId);
     }
   }, [chatId, isWindowFocused, user?.userId, messages]);
 
