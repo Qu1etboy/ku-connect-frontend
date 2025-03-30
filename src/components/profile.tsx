@@ -8,6 +8,8 @@ import ProfileMore from "./profile-more";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
+const MAX_BADGE_LENGTH = 6;
+
 type ProfileCardProps = {
   profile: Profile;
   onLiked: () => void;
@@ -89,16 +91,16 @@ export default function ProfileCard({
           <h1 className="text-xl font-bold">{profile.displayName}</h1>
           <p className="text-sm text-gray-500">{renderNisitInfo()}</p>
           <p className="mt-2">{renderBio()}</p>
-          <ProfileMore
-            profile={profile}
-            nisitInfo={renderNisitInfo()}
-          />
+          <ProfileMore profile={profile} nisitInfo={renderNisitInfo()} />
           <div className="my-4 flex flex-wrap gap-2">
-            {profile.interests.map((interest) => (
+            {profile.interests.slice(0, MAX_BADGE_LENGTH).map((interest) => (
               <Badge key={interest.id} variant="outline">
                 {interest.name}
               </Badge>
             ))}
+            {profile.interests.length > MAX_BADGE_LENGTH && (
+              <Badge variant="outline">+{profile.interests.length - MAX_BADGE_LENGTH}</Badge>
+            )}
           </div>
         </div>
         <div className="flex justify-between px-8 pb-8">
