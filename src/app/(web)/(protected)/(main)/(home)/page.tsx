@@ -54,7 +54,6 @@ export default function Home() {
       loadMoreProfiles();
     }
   }, [inView]);
-  console.log("data", data);
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -42,7 +42,10 @@ export default function NotificationManager({
   useEffect(() => {
     // subscribe to push noti
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      console.log("notification permission =", Notification.permission);
+      console.log(
+        "[notification manager] notification permission =",
+        Notification.permission,
+      );
       registerServiceWorker();
       if (isUserNotChecked()) {
         openRequestNotification();
@@ -52,7 +55,7 @@ export default function NotificationManager({
 
   const registerServiceWorker = async () => {
     try {
-      console.log("start register service worker");
+      console.log("[notification manager] start register service worker");
       await navigator.serviceWorker.register("/sw.js", {
         scope: "/",
         updateViaCache: "none",
@@ -69,7 +72,7 @@ export default function NotificationManager({
       // @ts-ignore
       mutation.mutate(sub);
 
-      console.log("finish register service worker");
+      console.log("[notification manager] finish register service worker");
     } catch (error) {
       console.error(error);
     }

@@ -27,7 +27,6 @@ export default function InstallPrompt() {
 
   useEffect(() => {
     const addToHomeScreenPromptCookie = getCookie(COOKIE_NAME);
-    console.log(addToHomeScreenPromptCookie);
     if (addToHomeScreenPromptCookie !== "dontShow") {
       setDisplayPrompt(true);
     }
@@ -40,12 +39,12 @@ export default function InstallPrompt() {
 
   return (
     displayPrompt && (
-      <div className="fixed bottom-0 left-0 right-0 z-50 pb-12 px-4">
+      <div className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-12">
         <Alert className="">
-          <button className="absolute top-0 right-0 p-3" onClick={closePrompt}>
+          <button className="absolute right-0 top-0 p-3" onClick={closePrompt}>
             <FaTimes />
           </button>
-          <AlertTitle className="font-semibold text-base">
+          <AlertTitle className="text-base font-semibold">
             Install KU Connect
           </AlertTitle>
           <AlertDescription className="text-base">

@@ -16,7 +16,7 @@ export default function ProfileProtected({ children }: ProfileProtectedProps) {
   const profile = useMyProfile();
 
   if (profile.isLoading) {
-    console.log("checking profile");
+    console.log("[profile guard] checking profile");
     return null;
   }
 

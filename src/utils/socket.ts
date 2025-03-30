@@ -15,6 +15,8 @@ const initializeSocket = async (): Promise<Socket | null> => {
   const { data } = await supabase.auth.getSession();
   const token = data?.session?.access_token;
 
+  console.log("[socket] has token =", token !== null || token !== "");
+
   if (!token) {
     console.warn("No access token found. Skipping socket connection.");
     return null;
@@ -33,18 +35,14 @@ const initializeSocket = async (): Promise<Socket | null> => {
     });
 
     socket.on("connect", () => {
-      console.log("Socket connected");
+      console.log("[socket] Socket connected");
     });
 
     socket.on("disconnect", () => {
-      console.log("Socket disconnected");
+      console.log("[socket] Socket disconnected");
     });
-    // if (!socket.connected) {
-    //   socket.connect();
-    //   console.log("socket connected");
-    // }
 
-    console.log("Socket initialized");
+    console.log("[socket] Socket initialized");
   }
 
   return socket;
@@ -55,11 +53,19 @@ const initializeSocket = async (): Promise<Socket | null> => {
  */
 supabase.auth.onAuthStateChange(async (event, session) => {
   if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-    if (socket) {
-      socket.auth = { token: session?.access_token };
-      socket.connect();
+    console.log("[socket.onAuthStateChange] user signed in or token refreshed");
+    if (!socket) {
+      console.log("[socket.onAuthStateChange] socket uninitialized");
+      return;
     }
+
+    console.log("[socket.onAuthStateChange] connect to socket");
+    socket.auth = { token: session?.access_token };
+    socket.connect();
   } else if (event === "SIGNED_OUT") {
+    console.log(
+      "[socket.onAuthStateChange] user signed out, disconnect socket",
+    );
     socket?.disconnect();
   }
 });
