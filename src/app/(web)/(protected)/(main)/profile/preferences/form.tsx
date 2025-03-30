@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { config } from "@/config";
 import { useUpdateSettings } from "@/hooks/settings";
 import { type Settings } from "@/services/settings";
+import { CheckCircle2, XCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -94,14 +95,17 @@ export default function PreferencesForm({
           To update your notification settings, go to your browser settings and
           allow notifications for this site.
         </p>
-        <div className="flex flex-row items-center justify-between rounded-lg p-3">
-          <div className="space-y-0.5">
-            <Label>
-              {Notification.permission === "granted"
-                ? "✅ Push notification is enabled"
-                : "❌ Push notification is enabled"}
-            </Label>
-          </div>
+        <div className="flex flex-row items-center gap-3">
+          {Notification.permission === "granted" ? (
+            <CheckCircle2 className="text-green-600" />
+          ) : (
+            <XCircle className="text-red-600" />
+          )}
+          <Label>
+            {Notification.permission === "granted"
+              ? "Push notification is enabled"
+              : "Push notification is enabled"}
+          </Label>
         </div>
       </div>
     </Form>
