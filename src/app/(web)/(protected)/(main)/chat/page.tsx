@@ -13,22 +13,26 @@ const MAX_DISPLAY = 4;
 export default function ChatListPage() {
   const router = useRouter();
 
-  const { data: chatList } = useQuery({
+  const { data: chatList, isLoading: isChatLoading } = useQuery({
     queryKey: ["listChat"],
     queryFn: () => listChat(),
   });
 
-  const { data: pendingInteractions } = useQuery({
-    queryKey: ["pendingInteractions"],
-    queryFn: () => getPendingInteractions(),
-  });
+  const { data: pendingInteractions, isLoading: isPendingInteractionsLoading } =
+    useQuery({
+      queryKey: ["pendingInteractions"],
+      queryFn: () => getPendingInteractions(),
+    });
 
   const handleChatRoomClick = (chatId: string) => {
     router.push(`/chat/${chatId}`);
   };
 
   return (
-    <MainLayout title="Chat">
+    <MainLayout
+      title="Chat"
+      isLoading={isChatLoading || isPendingInteractionsLoading}
+    >
       <div className="flex h-full flex-col">
         {/* Friends */}
         <div className="flex items-center space-x-4 px-4 py-7">
@@ -65,13 +69,22 @@ export default function ChatListPage() {
           )}
           {/* Text */}
           {(pendingInteractions?.count ?? 0) > 0 ? (
-            <p className="text-base font-semibold">
-              {pendingInteractions?.count ?? 0} People want to be friend
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-bold">
+                {pendingInteractions?.count ?? 0}
+              </p>
+              <p className="text-base font-semibold">
+                {" "}
+                People want to be friend
+              </p>
+            </div>
           ) : (
-            <p className="text-base font-semibold">
-              1 People want to be friend
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="text-lg font-bold">1</p>
+              <p className="text-base font-semibold">
+                People want to be friends
+              </p>
+            </div>
           )}
         </div>
         {/* Chat */}
