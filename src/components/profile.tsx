@@ -83,7 +83,7 @@ export default function ProfileCard({
 
   return (
     <div className="relative h-[calc(100dvh-85px)] w-full snap-center snap-always md:h-[calc(100dvh-65px)]">
-      <div className="pt-safe flex max-h-[55%] items-center justify-center overflow-hidden bg-gray-200">
+      <div className="pt-safe flex max-h-[55%] items-center justify-center overflow-hidden">
         <img
           src={getProfileImageUrl(profile.image ?? "")}
           alt={profile.displayName}
