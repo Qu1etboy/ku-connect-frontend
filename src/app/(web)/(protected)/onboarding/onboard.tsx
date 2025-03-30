@@ -194,6 +194,8 @@ export default function OnBoard({ user, interests }: OnBoardProps) {
                         data={field.data || []}
                         label={field.label}
                         placeholder={field.placeholder}
+                        // @ts-ignore
+                        onReset={() => form.resetField(field.id)}
                       />
                     ))}
                   </div>

@@ -15,6 +15,9 @@ import { Form } from "@/components/ui/form";
 import { config } from "@/config";
 import {
   contactForm,
+  displayDepartmentLabel,
+  displayFacultyLabel,
+  displayYearLabel,
   fieldOfStudy,
   nisitInfoForm,
   personalInfoForm,
@@ -47,6 +50,19 @@ export default function ProfileInfomationForm({
   defaultValues: any;
 }) {
   const [departmentData, setDepartmentData] = useState<any>(null);
+  const initialValues: any = {
+    faculty: "",
+    department: "",
+    year: "",
+    displayName: user.full_name,
+    bio: "",
+    line: "",
+    facebook: "",
+    instagram: "",
+    other: "",
+    interests: [],
+  };
+
   const form = useForm({
     defaultValues,
   });
@@ -80,6 +96,19 @@ export default function ProfileInfomationForm({
         image: data.path,
       });
     }
+  };
+
+  const displayLabel = (text: string, field: string) => {
+    if (field === "faculty") {
+      return displayFacultyLabel(text);
+    }
+    if (field === "department") {
+      return displayDepartmentLabel(text);
+    }
+    if (field === "year") {
+      return displayYearLabel(text);
+    }
+    return text;
   };
 
   const formWatch = form.watch();
@@ -148,7 +177,7 @@ export default function ProfileInfomationForm({
                   <div className="flex justify-end">
                     {form.getValues(field.id) ? (
                       <p className="max-w-[25ch] truncate text-green-600">
-                        {form.getValues(field.id)}
+                        {displayLabel(form.getValues(field.id), field.id)}
                       </p>
                     ) : (
                       <p className="text-muted-foreground">
@@ -174,6 +203,10 @@ export default function ProfileInfomationForm({
                       type={field.type}
                       label={field.label}
                       placeholder={field.placeholder}
+                      description={field.description}
+                      onReset={() =>
+                        form.setValue(field.id, initialValues[field.id])
+                      }
                       data={
                         field.label === "Department" && departmentData
                           ? departmentData
@@ -187,6 +220,7 @@ export default function ProfileInfomationForm({
                           type="button"
                           variant="outline"
                           className="w-full"
+                          onClick={() => form.resetField(field.id)}
                         >
                           Cancel
                         </Button>

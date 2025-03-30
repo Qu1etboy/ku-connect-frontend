@@ -10,7 +10,7 @@ export type Profile = {
   bio: string | null;
   faculty: string | null;
   department: string | null;
-  year: number | null;
+  year: string | null;
   createdTime: string;
   updatedTime: string;
   image: string | null;

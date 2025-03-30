@@ -34,6 +34,8 @@ export const personalInfoForm: FormDataType[] = [
     type: "text",
     label: "Display Name",
     placeholder: "Enter your name",
+    description:
+      "If left blank, your Google account name will be used by default.",
     required: true,
   },
   {
@@ -282,13 +284,13 @@ export const fieldOfStudy: {
 };
 
 export type SystemInterest = {
-  id: string,
-  name: string,
-}
+  id: string;
+  name: string;
+};
 
 /**
  * Interests form take system interests and return form data
- * 
+ *
  * @param systemInterests - data from backend
  * @returns form data
  */
@@ -317,3 +319,151 @@ export const formSchema = z.object({
 });
 
 export type ProfileForm = z.infer<typeof formSchema>;
+
+export function displayFacultyLabel(facultyValue: string): string {
+  const faculties: any = {
+    agriculture: "Agriculture",
+    "business-administration": "Business Administration",
+    fisheries: "Fisheries",
+    humanities: "Humanities",
+    forestry: "Forestry",
+    science: "Science",
+    engineering: "Engineering",
+    education: "Education",
+    economics: "Economics",
+    architecture: "Architecture",
+    "social-sciences": "Social Sciences",
+    "veterinary-medicine": "Veterinary Medicine",
+    "agro-industry": "Agro-Industry",
+    "veterinary-technology": "Veterinary Technology",
+    environment: "Environment",
+  };
+
+  return faculties[facultyValue] ? faculties[facultyValue] : "";
+}
+
+export function displayDepartmentLabel(departmentValue: string): string {
+  const departments: any = {
+    entomology: "Entomology",
+    "farm-mechanics": "Farm Mechanics",
+    "home-economics": "Home Economics",
+    "soil-science": "Soil Science",
+    agronomy: "Agronomy",
+    horticulture: "Horticulture",
+    "plant-pathology": "Plant Pathology",
+    "agricultural-extension-and-communication":
+      "Agricultural Extension and Communication",
+    "animal-science": "Animal Science",
+    finance: "Finance",
+    marketing: "Marketing",
+    management: "Management",
+    accounting: "Accounting",
+    "technology-and-operations-management":
+      "Technology and Operations Management",
+    "fishery-management": "Fishery Management",
+    "fishery-biology": "Fishery Biology",
+    "fishery-products": "Fishery Products",
+    aquaculture: "Aquaculture",
+    "marine-science": "Marine Science",
+    music: "Music",
+    "communication-arts-and-information-science":
+      "Communication Arts and Information Science",
+    "foreign-languages": "Foreign Languages",
+    literature: "Literature",
+    linguistics: "Linguistics",
+    "thai-language": "Thai Language",
+    "eastern-languages": "Eastern Languages",
+    "philosophy-and-religion": "Philosophy and Religion",
+    "tourism-and-hospitality-industry": "Tourism and Hospitality Industry",
+    "forest-management": "Forest Management",
+    "forest-biology": "Forest Biology",
+    "forest-engineering": "Forest Engineering",
+    "forest-products": "Forest Products",
+    silviculture: "Silviculture",
+    conservation: "Conservation",
+    mathematics: "Mathematics",
+    chemistry: "Chemistry",
+    microbiology: "Microbiology",
+    biochemistry: "Biochemistry",
+    botany: "Botany",
+    genetics: "Genetics",
+    physics: "Physics",
+    "applied-radiation-and-isotope": "Applied Radiation and Isotope",
+    "computer-science": "Computer Science",
+    "earth-science": "Earth Science",
+    "materials-science": "Materials Science",
+    statistics: "Statistics",
+    zoology: "Zoology",
+    "aerospace-engineering": "Aerospace Engineering",
+    "computer-engineering": "Computer Engineering",
+    "chemical-engineering": "Chemical Engineering",
+    "mechanical-engineering": "Mechanical Engineering",
+    "water-resources-engineering": "Water Resources Engineering",
+    "electrical-engineering": "Electrical Engineering",
+    "materials-engineering": "Materials Engineering",
+    "civil-engineering": "Civil Engineering",
+    "environmental-engineering": "Environmental Engineering",
+    "industrial-engineering": "Industrial Engineering",
+    education: "Education",
+    "educational-psychology-and-guidance":
+      "Educational Psychology and Guidance",
+    "educational-technology": "Educational Technology",
+    "physical-education": "Physical Education",
+    "vocational-education": "Vocational Education",
+    economics: "Economics",
+    "agricultural-and-resource-economics":
+      "Agricultural and Resource Economics",
+    cooperative: "Cooperative",
+    architecture: "Architecture",
+    "landscape-architecture": "Landscape Architecture",
+    "building-innovation-and-technology": "Building Innovation and Technology",
+    psychology: "Psychology",
+    law: "Law",
+    history: "History",
+    geography: "Geography",
+    "political-science-and-public-administration":
+      "Political Science and Public Administration",
+    "sociology-and-anthropology": "Sociology and Anthropology",
+    anatomy: "Anatomy",
+    physiology: "Physiology",
+    "microbiology-and-immunology": "Microbiology and Immunology",
+    pharmacology: "Pharmacology",
+    pathology: "Pathology",
+    parasitology: "Parasitology",
+    "veterinary-public-health": "Veterinary Public Health",
+    "companion-animals-clinical-sciences":
+      "Companion Animals Clinical Sciences",
+    "farm-resources-and-production-medicine":
+      "Farm Resources and Production Medicine",
+    "large-animal-and-wildlife-clinical-science":
+      "Large Animal and Wildlife Clinical Science",
+    "agro-industrial-technology": "Agro-Industrial Technology",
+    biotechnology: "Biotechnology",
+    "food-science-and-technology": "Food Science & Technology",
+    "packaging-and-materials-technology": "Packaging & Materials Technology",
+    "product-development": "Product Development",
+    "textile-science": "Textile Science",
+    "agro-industrial-innovation-and-technology":
+      "Agro-Industrial Innovation and Technology",
+    "veterinary-technology": "Veterinary Technology",
+    "animal-nursing": "Animal Nursing",
+    "environmental-technology-and-management":
+      "Environmental Technology and Management",
+    "environmental-science": "Environmental Science",
+  };
+
+  return departments[departmentValue] ? departments[departmentValue] : "";
+}
+
+export function displayYearLabel(yearValue: string): string {
+  const years: any = {
+    "1": "1st year",
+    "2": "2nd year",
+    "3": "3rd year",
+    "4": "4th year",
+    ">4": "More than 4 years",
+    graduated: "Graduated",
+  };
+
+  return years[yearValue] ? years[yearValue] : "";
+}

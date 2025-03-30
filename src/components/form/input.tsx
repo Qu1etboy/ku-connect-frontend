@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, X } from "lucide-react";
 import { ControllerRenderProps, FieldValues } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
@@ -39,6 +39,7 @@ type InputFieldProps = {
   required?: boolean;
   selectedFaculty?: string;
   disabled?: boolean;
+  onReset?: () => void;
 };
 
 export default function InputField({
@@ -50,6 +51,7 @@ export default function InputField({
   type = "text",
   description,
   disabled,
+  onReset,
 }: InputFieldProps) {
   const getInputByType = (
     type: string,
@@ -232,6 +234,11 @@ export default function InputField({
     );
   }
 
+  const isAllowToReset = (type: string) => {
+    const allowTypes = ["text", "textarea", "select", "combobox", "date"];
+    return allowTypes.includes(type);
+  };
+
   return (
     <FormField
       control={control}
@@ -239,7 +246,22 @@ export default function InputField({
       render={({ field }) => (
         <FormItem>
           {type != "checkbox" && <FormLabel>{label}</FormLabel>}
-          {getInputByType(type, field)}
+          <div className="relative">
+            {getInputByType(type, field)}
+            {onReset && isAllowToReset(type) ? (
+              <button
+                type="button"
+                className={cn(
+                  "absolute right-1 top-1 h-7 w-9 rounded-full text-green-600 hover:bg-gray-100 hover:text-green-800",
+                  type !== "text" && type !== "textarea" ? "mr-8" : "",
+                )}
+                onClick={onReset}
+              >
+                <X className="mx-auto h-4 w-4" />
+                <span className="sr-only">Clear</span>
+              </button>
+            ) : null}
+          </div>
           <FormDescription>{description}</FormDescription>
           <FormMessage />
         </FormItem>

@@ -11,6 +11,11 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer";
+import {
+  displayDepartmentLabel,
+  displayFacultyLabel,
+  displayYearLabel,
+} from "@/data/form";
 
 interface ProfileMoreProps {
   profile: Profile;
@@ -37,17 +42,17 @@ export default function ProfileMore({
       profile.settings.contactInfoVisibility === "connected");
 
   const renderNisitInfo = () => {
-    let info = "";
+    let info = [];
     if (profile.faculty) {
-      info += `Faculty of ${profile.faculty}, `;
+      info.push(`Faculty of ${displayFacultyLabel(profile.faculty)}`);
     }
     if (profile.department) {
-      info += `${profile.department}, `;
+      info.push(`${displayDepartmentLabel(profile.department)}`);
     }
     if (profile.year) {
-      info += `${profile.year}`;
+      info.push(`${displayYearLabel(profile.year)}`);
     }
-    return info;
+    return info.join(", ");
   };
 
   return (
@@ -86,20 +91,24 @@ export default function ProfileMore({
           </DrawerHeader>
 
           <div className="space-y-6 px-4 pb-6 pt-2">
-            <div>
-              <h2 className="font-semibold text-muted-foreground">Interests</h2>
-              <div className="my-4 flex flex-wrap gap-2">
-                {profile.interests.map((interest) => (
-                  <Badge
-                    key={interest.id}
-                    variant="outline"
-                    className="rounded-3xl px-3 py-2 text-sm"
-                  >
-                    {interest.name}
-                  </Badge>
-                ))}
+            {profile.interests.length > 0 && (
+              <div>
+                <h2 className="font-semibold text-muted-foreground">
+                  Interests
+                </h2>
+                <div className="my-4 flex flex-wrap gap-2">
+                  {profile.interests.map((interest) => (
+                    <Badge
+                      key={interest.id}
+                      variant="outline"
+                      className="rounded-3xl px-3 py-2 text-sm"
+                    >
+                      {interest.name}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
             {isContactInfoVisible && (
               <div>
                 <h2 className="font-semibold text-muted-foreground">

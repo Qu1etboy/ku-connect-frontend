@@ -7,6 +7,7 @@ import { useState } from "react";
 import ProfileMore from "./profile-more";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { displayFacultyLabel, displayDepartmentLabel, displayYearLabel } from "@/data/form";
 
 const MAX_BADGE_LENGTH = 6;
 
@@ -26,17 +27,17 @@ export default function ProfileCard({
   >([]);
 
   const renderNisitInfo = () => {
-    let info = "";
+    let info = [];
     if (profile.faculty) {
-      info += `Faculty of ${profile.faculty}, `;
+      info.push(`Faculty of ${displayFacultyLabel(profile.faculty)}`);
     }
     if (profile.department) {
-      info += `${profile.department}, `;
+      info.push(`${displayDepartmentLabel(profile.department)}`);
     }
     if (profile.year) {
-      info += `${profile.year}`;
+      info.push(`${displayYearLabel(profile.year)}`);
     }
-    return info;
+    return info.join(", ");
   };
 
   const isBioLong = () => {
