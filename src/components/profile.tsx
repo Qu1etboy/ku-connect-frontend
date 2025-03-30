@@ -7,7 +7,11 @@ import { useState } from "react";
 import ProfileMore from "./profile-more";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { displayFacultyLabel, displayDepartmentLabel, displayYearLabel } from "@/data/form";
+import {
+  displayFacultyLabel,
+  displayDepartmentLabel,
+  displayYearLabel,
+} from "@/data/form";
 
 const MAX_BADGE_LENGTH = 6;
 
@@ -79,7 +83,7 @@ export default function ProfileCard({
 
   return (
     <div className="relative h-[calc(100dvh-85px)] w-full snap-center snap-always md:h-[calc(100dvh-65px)]">
-      <div className="flex max-h-[55%] min-h-[55%] items-center justify-center overflow-hidden bg-gray-200">
+      <div className="pt-safe flex max-h-[55%] items-center justify-center overflow-hidden bg-gray-200">
         <img
           src={getProfileImageUrl(profile.image ?? "")}
           alt={profile.displayName}

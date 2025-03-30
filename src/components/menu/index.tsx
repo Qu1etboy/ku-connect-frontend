@@ -32,17 +32,27 @@ const menu = [
 export default function Menu() {
   const pathname = usePathname();
 
+  const isActive = (path: string) => {
+    if (pathname === path) {
+      return true;
+    }
+    if (path === "/") {
+      return;
+    }
+    return pathname.includes(path);
+  };
+
   return (
     <nav className="sticky bottom-0 w-full border-t bg-white">
-      <ul className="flex justify-between items-center space-x-4">
+      <ul className="flex items-center justify-between">
         {menu.map((item) => (
-          <MenuItem key={item.url} active={item.url === pathname}>
+          <MenuItem key={item.url} active={isActive(item.url)}>
             <Link
               href={item.url}
-              className="flex flex-col justify-center items-center px-4 py-2"
+              className="flex flex-col items-center justify-center px-4 py-2"
             >
               {item.icon}
-              <span className="text-xs px-3 pb-6 md:px-0 md:pb-0 md:text-sm mt-1">
+              <span className="mt-1 px-3 pb-6 text-xs md:px-0 md:pb-0 md:text-sm">
                 {item.name}
               </span>
             </Link>
