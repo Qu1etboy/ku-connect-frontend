@@ -38,6 +38,10 @@ const initializeSocket = async (): Promise<Socket | null> => {
       console.log("[socket] Socket connected");
     });
 
+    socket.on("exception", (err) => {
+      console.log("[socket] error =", err);
+    });
+
     socket.on("disconnect", () => {
       console.log("[socket] Socket disconnected");
     });
