@@ -77,8 +77,8 @@ export default function ProfileCard({
   };
 
   return (
-    <div className="relative h-full w-full snap-center snap-always">
-      <div className="h-[55%]">
+    <div className="relative h-[calc(100dvh-85px)] w-full snap-center snap-always md:h-[calc(100dvh-65px)]">
+      <div className="flex max-h-[55%] items-center justify-center overflow-hidden">
         <img
           src={getProfileImageUrl(profile.image ?? "")}
           alt={profile.displayName}
@@ -87,7 +87,7 @@ export default function ProfileCard({
       </div>
       <section className="relative flex h-[45%] flex-col justify-between px-4">
         <div className="absolute -top-20 left-0 right-0 h-24 w-full bg-gradient-to-t from-white from-30% via-white/50 via-60% to-transparent to-100%"></div>
-        <div className="relative top-[-10px] z-10">
+        <div className="relative top-[-10px] z-10 bg-white">
           <h1 className="text-xl font-bold">{profile.displayName}</h1>
           <p className="text-sm text-gray-500">{renderNisitInfo()}</p>
           <p className="mt-2">{renderBio()}</p>
