@@ -26,7 +26,7 @@ export default function ChatLayout({
   profile,
 }: ChatLayoutProps) {
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-dvh flex-col">
       <header className="pt-safe sticky top-0 z-20 border-b bg-white shadow-sm">
         <div className="header-safe flex place-content-center justify-between px-4 text-center align-middle">
           {backUrl && (
