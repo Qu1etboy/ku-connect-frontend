@@ -194,7 +194,10 @@ export default function OnBoard({ user, interests }: OnBoardProps) {
                         data={field.data || []}
                         label={field.label}
                         placeholder={field.placeholder}
-                        onReset={() => form.resetField(field.id as keyof ProfileForm)}
+                        description={field.description}
+                        onReset={() =>
+                          form.resetField(field.id as keyof ProfileForm)
+                        }
                       />
                     ))}
                   </div>

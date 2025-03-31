@@ -24,7 +24,7 @@ export default function LoginPage() {
         <Image src="/ku-connect.svg" width={180} height={130} alt={""} />
         <Button className="px-12 py-5" onClick={() => login()}>
           <FaGoogle />
-          Login with Google (@ku.th)
+          Login with Google
         </Button>
       </div>
       <footer className="mt-12 text-center text-sm text-muted-foreground">

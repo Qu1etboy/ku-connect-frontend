@@ -99,6 +99,7 @@ export default function ProfileInfomationForm({
   };
 
   const displayLabel = (text: string, field: string) => {
+    console.log("displayLabel", text, field);
     if (field === "faculty") {
       return displayFacultyLabel(text);
     }
@@ -175,9 +176,9 @@ export default function ProfileInfomationForm({
                 <div className="flex cursor-pointer justify-between p-4 text-sm hover:bg-gray-50 md:text-base">
                   <p>{field.label}</p>
                   <div className="flex justify-end">
-                    {form.getValues(field.id) ? (
+                    {defaultValues[field.id] ? (
                       <p className="max-w-[25ch] truncate text-green-600">
-                        {displayLabel(form.getValues(field.id), field.id)}
+                        {displayLabel(defaultValues[field.id], field.id)}
                       </p>
                     ) : (
                       <p className="text-muted-foreground">
@@ -204,9 +205,9 @@ export default function ProfileInfomationForm({
                       label={field.label}
                       placeholder={field.placeholder}
                       description={field.description}
-                      onReset={() =>
-                        form.setValue(field.id, initialValues[field.id])
-                      }
+                      onReset={() => {
+                        form.setValue(field.id, initialValues[field.id]);
+                      }}
                       data={
                         field.label === "Department" && departmentData
                           ? departmentData

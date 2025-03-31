@@ -79,7 +79,7 @@ export const nisitInfoForm: FormDataType[] = [
   },
   {
     id: "year",
-    type: "select",
+    type: "combobox",
     label: "Year of Study",
     placeholder: "Select year",
     data: [
@@ -464,6 +464,8 @@ export function displayYearLabel(yearValue: string): string {
     ">4": "More than 4 years",
     graduated: "Graduated",
   };
+
+  console.log("yearsLabel = ", years[yearValue]);
 
   return years[yearValue] ? years[yearValue] : "";
 }
