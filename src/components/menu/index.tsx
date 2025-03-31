@@ -52,7 +52,7 @@ export default function Menu() {
               className="flex flex-col items-center justify-center px-4 py-2"
             >
               {item.icon}
-              <span className="mt-1 px-3 pb-6 text-xs md:px-0 md:pb-0 md:text-sm">
+              <span className="pb-safe mt-1 px-3 text-xs md:px-0 md:text-sm">
                 {item.name}
               </span>
             </Link>

@@ -151,11 +151,7 @@ export default function ChatPage() {
       handleSendMessage={handleSendMessage}
       profile={profileData}
     >
-      <div
-        className="h-[calc(100dvh-10.5rem)] overflow-y-auto px-3 pb-2"
-        onScroll={handleScroll}
-        ref={chatContainerRef}
-      >
+      <div className="px-3 pb-2" ref={chatContainerRef}>
         {loadingHistory && (
           <div className="flex justify-center p-2 transition-all duration-300">
             <div className="h-5 w-5 animate-spin rounded-full border-4 border-gray-500 border-t-transparent"></div>

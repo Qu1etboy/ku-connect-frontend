@@ -56,7 +56,7 @@ export default function ChatLayout({
           <ThreeDot color="#bbf7d0" size="medium" />
         </main>
       ) : (
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       )}
       <MessageInput onSend={handleSendMessage} />
     </div>
@@ -77,24 +77,26 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
     setMessage("");
   };
   return (
-    <div className="flex space-x-4 border-t border-gray-100 p-4 pb-8 shadow-sm focus-within:pb-4 md:pb-4">
-      <Textarea
-        maxLength={150}
-        className="group min-h-9 resize-none text-base"
-        rows={1}
-        value={message}
-        onChange={handleChange}
-        placeholder="Type a message ..."
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            handleSend();
-          }
-        }}
-      />
-      <Button onClick={handleSend} className="h-auto">
-        <Navigation2 className="rotate-90" />
-      </Button>
+    <div className="pb-safe border-t border-gray-100 bg-white">
+      <div className="z-10 flex gap-4 px-4 pb-4 pt-4 shadow-sm">
+        <Textarea
+          maxLength={150}
+          className="min-h-9 resize-none text-base"
+          rows={1}
+          value={message}
+          onChange={handleChange}
+          placeholder="Type a message ..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
+        />
+        <Button onClick={handleSend} className="h-auto">
+          <Navigation2 className="rotate-90" />
+        </Button>
+      </div>
     </div>
   );
 };
