@@ -196,7 +196,7 @@ export default function OnBoard({ user, interests }: OnBoardProps) {
                         placeholder={field.placeholder}
                         description={field.description}
                         onReset={() =>
-                          form.resetField(field.id as keyof ProfileForm)
+                          form.setValue(field.id as keyof ProfileForm, "")
                         }
                       />
                     ))}

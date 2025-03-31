@@ -54,7 +54,7 @@ export default function ProfileInfomationForm({
     faculty: "",
     department: "",
     year: "",
-    displayName: user.full_name,
+    displayName: "",
     bio: "",
     line: "",
     facebook: "",
@@ -70,6 +70,11 @@ export default function ProfileInfomationForm({
   const mutation = useUpdateMyProfile();
 
   const onSubmit = (data: any) => {
+    if (!data.displayName) {
+      data.displayName = user.full_name;
+      form.setValue("displayName", user.full_name);
+    }
+
     if (config.ENV === "development") {
       toast("Form Submitted", {
         description: <pre>{JSON.stringify(data, null, 2)}</pre>,
