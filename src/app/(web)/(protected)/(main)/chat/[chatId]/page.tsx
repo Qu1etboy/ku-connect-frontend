@@ -44,31 +44,12 @@ export default function ChatPage() {
   let prevMinute = "";
   let prevDate = "";
 
-  const [loadingHistory, setLoadingHistory] = useState(false);
   // const [isScrolling, setIsScrolling] = useState(false);
 
   const isFirstLoad = useRef(true);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    if (chatContainerRef.current) {
-      // setIsScrolling(true);
-      // setTimeout(() => {
-      //   setIsScrolling(false);
-      // }
-      // , 1000);
-      if (chatContainerRef.current.scrollTop === 0 && !loadingHistory) {
-        setLoadingHistory(true);
-
-        // TODO: fetch more history
-        setTimeout(() => {
-          setLoadingHistory(false);
-        }, 1500);
-      }
-    }
-  };
 
   const handleSendMessage = (content: string) => {
     const newMessage = {
@@ -159,11 +140,6 @@ export default function ChatPage() {
       profile={profileData}
     >
       <div className="px-3" ref={chatContainerRef}>
-        {loadingHistory && (
-          <div className="flex justify-center p-2 transition-all duration-300">
-            <div className="h-5 w-5 animate-spin rounded-full border-4 border-gray-500 border-t-transparent"></div>
-          </div>
-        )}
         {messages.map((message) => {
           const displayDate = prevDate !== message.createdTime.slice(0, 10);
           prevDate = message.createdTime.slice(0, 10);
