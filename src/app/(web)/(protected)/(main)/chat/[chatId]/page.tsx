@@ -139,6 +139,7 @@ export default function ChatPage() {
         block: "nearest",
       });
     }
+    window.scrollTo(0, 0);
     console.log("messages", messages[messages.length - 1]);
   }, [messages]);
 

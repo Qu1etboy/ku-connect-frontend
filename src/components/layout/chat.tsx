@@ -1,7 +1,7 @@
 import { Profile } from "@/services/profile";
 import { ChevronLeft, InfoIcon, Navigation2 } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ThreeDot } from "react-loading-indicators";
 import ProfileMore from "../profile-more";
 import { Button } from "../ui/button";
@@ -26,6 +26,8 @@ export default function ChatLayout({
   profile,
 }: ChatLayoutProps) {
   const [viewportHeight, setViewportHeight] = useState("100vh");
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const lastScrollPosition = useRef<number>(0);
 
   /**
    * Update the height of chat layout when the mobile keyboard
@@ -45,6 +47,18 @@ export default function ChatLayout({
       setViewportHeight(`${window.visualViewport?.height}px`);
       handleScrollToTop();
     };
+
+    // Store last scroll position before the height update
+    if (chatContainerRef.current) {
+      lastScrollPosition.current = chatContainerRef.current.scrollTop;
+    }
+
+    // Restore scroll position after height update
+    requestAnimationFrame(() => {
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTop = lastScrollPosition.current;
+      }
+    });
 
     window.visualViewport?.addEventListener("resize", updateHeight);
     updateHeight();
@@ -85,7 +99,9 @@ export default function ChatLayout({
           <ThreeDot color="#bbf7d0" size="medium" />
         </main>
       ) : (
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main ref={chatContainerRef} className="flex-1 overflow-y-auto">
+          {children}
+        </main>
       )}
       <MessageInput onSend={handleSendMessage} />
     </div>
