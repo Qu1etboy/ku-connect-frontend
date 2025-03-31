@@ -26,7 +26,7 @@ export default function ChatLayout({
   profile,
 }: ChatLayoutProps) {
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex h-screen flex-col">
       <header className="pt-safe sticky top-0 z-20 border-b bg-white shadow-sm">
         <div className="header-safe flex place-content-center justify-between px-4 text-center align-middle">
           {backUrl && (
@@ -77,7 +77,7 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
     setMessage("");
   };
   return (
-    <div className="flex space-x-4 border-t border-gray-100 p-4 pb-8 shadow-sm md:pb-4">
+    <div className="mb-8 flex space-x-4 border-t border-gray-100 p-4 shadow-sm md:mb-4">
       <Textarea
         maxLength={150}
         className="min-h-9 resize-none text-base"
