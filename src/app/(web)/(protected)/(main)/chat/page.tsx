@@ -46,6 +46,7 @@ export default function ChatListPage() {
                     <AvatarImage
                       src={getProfileImageUrl(interaction.image ?? "")}
                       alt="avatar"
+                      className="object-cover"
                     />
                     <AvatarFallback>interaction.name[0]</AvatarFallback>
                   </Avatar>
@@ -63,7 +64,11 @@ export default function ChatListPage() {
             </div>
           ) : (
             <Avatar className="h-10 w-10">
-              <AvatarImage src="/ku-connect-bg-white.svg" alt="avatar" />
+              <AvatarImage
+                src="/ku-connect-bg-white.svg"
+                alt="avatar"
+                className="object-cover"
+              />
               <AvatarFallback>U</AvatarFallback>
             </Avatar>
           )}
@@ -100,6 +105,7 @@ export default function ChatListPage() {
                 <AvatarImage
                   src={getProfileImageUrl(chat.avatar)}
                   alt={chat.name}
+                  className="object-cover"
                 />
                 <AvatarFallback>{chat.name[0]}</AvatarFallback>
               </Avatar>
