@@ -27,14 +27,21 @@ export default function ChatLayout({
 }: ChatLayoutProps) {
   const [viewportHeight, setViewportHeight] = useState("100vh");
 
+  /**
+   * Update the height of chat layout when the mobile keyboard
+   * appear and scroll to top of page
+   *
+   * avoid this bug: https://medium.com/@krutilin.sergey.ks/fixing-the-safari-mobile-resizing-bug-a-developers-guide-6568f933cde0
+   */
   useEffect(() => {
     const handleScrollToTop = () => {
-      console.log("touchend");
+      console.log("[chat layout] touchend");
       window.scrollTo(0, 0);
     };
     document.addEventListener("touchend", handleScrollToTop);
 
     const updateHeight = () => {
+      console.log("[chat layout] height changed");
       setViewportHeight(`${window.visualViewport?.height}px`);
       handleScrollToTop();
     };
@@ -98,6 +105,18 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
     onSend(message);
     setMessage("");
   };
+
+  /**
+   *  On mobile device such as ios, when click focus on input
+   * the keyboard will appear and push the content up so we
+   * need to scroll user to top of the page
+   * avoid this bug: https://medium.com/@krutilin.sergey.ks/fixing-the-safari-mobile-resizing-bug-a-developers-guide-6568f933cde0
+   */
+  const handleScrollToTopOnFocus = () => {
+    console.log("[chat layout] message input focus");
+    window.scrollTo(0, 0);
+  };
+
   return (
     <div className="mb-0 border-t border-gray-100 bg-white pb-4 shadow-sm md:pb-0">
       <div className="z-10 flex gap-4 px-4 pb-4 pt-4">
@@ -107,6 +126,7 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
           rows={1}
           value={message}
           onChange={handleChange}
+          onFocus={handleScrollToTopOnFocus}
           placeholder="Type a message ..."
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
