@@ -1,7 +1,7 @@
 import { Profile } from "@/services/profile";
 import { ChevronLeft, InfoIcon, Navigation2 } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThreeDot } from "react-loading-indicators";
 import ProfileMore from "../profile-more";
 import { Button } from "../ui/button";
@@ -25,8 +25,23 @@ export default function ChatLayout({
   handleSendMessage,
   profile,
 }: ChatLayoutProps) {
+  const [viewportHeight, setViewportHeight] = useState("100vh");
+
+  useEffect(() => {
+    const updateHeight = () => {
+      setViewportHeight(`${window.visualViewport?.height}px`);
+    };
+
+    window.visualViewport?.addEventListener("resize", updateHeight);
+    updateHeight();
+
+    return () => {
+      window.visualViewport?.removeEventListener("resize", updateHeight);
+    };
+  }, []);
+
   return (
-    <div className="flex h-dvh flex-col">
+    <div className="flex flex-col" style={{ height: viewportHeight }}>
       <header className="pt-safe sticky top-0 z-20 border-b bg-white shadow-sm">
         <div className="header-safe flex place-content-center justify-between px-4 text-center align-middle">
           {backUrl && (
