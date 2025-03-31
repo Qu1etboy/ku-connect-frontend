@@ -128,10 +128,16 @@ export default function ChatPage() {
 
   useEffect(() => {
     if (isFirstLoad.current && messages.length > 0) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "instant",
+        block: "nearest",
+      });
       isFirstLoad.current = false;
     } else {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     }
     console.log("messages", messages[messages.length - 1]);
   }, [messages]);
@@ -151,7 +157,7 @@ export default function ChatPage() {
       handleSendMessage={handleSendMessage}
       profile={profileData}
     >
-      <div className="px-3 pb-2" ref={chatContainerRef}>
+      <div className="px-3" ref={chatContainerRef}>
         {loadingHistory && (
           <div className="flex justify-center p-2 transition-all duration-300">
             <div className="h-5 w-5 animate-spin rounded-full border-4 border-gray-500 border-t-transparent"></div>
