@@ -114,7 +114,10 @@ const MessageInput = ({ onSend }: MessageInputProps) => {
    */
   const handleScrollToTopOnFocus = () => {
     console.log("[chat layout] message input focus");
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      console.log("[chat layout] scroll to top");
+    }, 100);
   };
 
   return (
