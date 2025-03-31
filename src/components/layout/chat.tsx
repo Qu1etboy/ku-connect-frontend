@@ -28,15 +28,22 @@ export default function ChatLayout({
   const [viewportHeight, setViewportHeight] = useState("100vh");
 
   useEffect(() => {
+    const handleScrollToTop = () => {
+      console.log("touchend");
+      window.scrollTo(0, 0);
+    };
+    document.addEventListener("touchend", handleScrollToTop);
+
     const updateHeight = () => {
       setViewportHeight(`${window.visualViewport?.height}px`);
+      handleScrollToTop();
     };
 
     window.visualViewport?.addEventListener("resize", updateHeight);
     updateHeight();
-
     return () => {
       window.visualViewport?.removeEventListener("resize", updateHeight);
+      document.removeEventListener("touchend", handleScrollToTop);
     };
   }, []);
 
