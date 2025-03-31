@@ -42,7 +42,7 @@ export default function ProfileMore({
       profile.settings.contactInfoVisibility === "connected");
 
   const renderNisitInfo = () => {
-    let info = [];
+    const info = [];
     if (profile.faculty) {
       info.push(`Faculty of ${displayFacultyLabel(profile.faculty)}`);
     }
