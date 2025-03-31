@@ -208,6 +208,7 @@ export default function ChatPage() {
                   <Avatar className="mt-2 h-8 w-8">
                     <AvatarImage
                       src={getProfileImageUrl(chatData?.avatar || "")}
+                      className="object-cover"
                     />
                     <AvatarFallback>{chatData?.name[0]}</AvatarFallback>
                   </Avatar>

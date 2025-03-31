@@ -69,7 +69,7 @@ export default function ProfileMore({
           <DrawerHeader>
             <Avatar className="absolute -top-14 left-1/2 h-28 w-28 -translate-x-1/2 rounded-full bg-white shadow-md">
               <AvatarImage
-                className="rounded-full"
+                className="rounded-full object-cover"
                 src={getProfileImageUrl(profile.image || "")}
               />
               <AvatarFallback>
