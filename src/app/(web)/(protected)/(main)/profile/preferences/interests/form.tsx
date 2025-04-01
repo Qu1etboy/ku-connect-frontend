@@ -49,7 +49,7 @@ export default function InterestsForm({
             />
           ))}
         </div>
-        <div className="sticky bottom-0 z-[1] mx-3 bg-white">
+        <div className="mx-3">
           <Button type="submit" className="mb-16 mt-6 w-full">
             Save
           </Button>
