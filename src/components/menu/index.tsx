@@ -43,7 +43,7 @@ export default function Menu() {
   };
 
   return (
-    <nav className="sticky bottom-0 w-full border-t bg-white">
+    <nav className="sticky bottom-0 z-[2] w-full border-t bg-white">
       <ul className="flex items-center justify-between">
         {menu.map((item) => (
           <MenuItem key={item.url} active={isActive(item.url)}>
